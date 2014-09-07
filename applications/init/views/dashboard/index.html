@@ -1,0 +1,174 @@
+{{extend 'layoutT.html'}}<!-- <div class="layout-app">  -->
+			<div class="innerLR">
+				<h2 class="margin-none">General Info<i class="fa fa-fw fa-pencil text-muted"></i>
+				</h2>
+				<div class="separator-h"></div>
+				<div class="row">
+					<div class="col-md-4">
+						<!-- Widget -->
+						<div class="widget widget-body-white">
+							<div class="media widget-body innerAll">
+								<a href="{{=URL('dashboard', 'account')}}" class="pull-left">
+									<img src="{{if basicData['profileImg']:}}{{=URL('api_shar','image',args=basicData['profileImg'])}}{{else:}}{{=URL('static','images/no-image.jpg')}}{{pass}}" width="60"
+									alt="">
+								</a>
+								<div class="media-body innerL half">
+									<h4 class="margin-none"><a href="" class="text-primary">{{=basicData['profileName']}}</a>
+									</h4>
+									<p class="strong">{{=basicData['profileTag']}}</p>
+									<div class="bg-gray innerAll ">
+										<h5 class="innerB half border-bottom text-muted margin-none">Logged in as {{=basicData['name']}}</h5>
+										<p class="margin-none "><a href="">{{if len(users) == 1:}}{{=len(users)}} moderator{{else:}}{{=len(users)}} moderators{{pass}}  <i class="fa fa-fw fa-code-fork fa-rotate-270"></i></a>
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- //Widget -->
+						<!-- Widget -->
+						<div class="widget widget-body-white ">
+							<div class="widget-head">
+								<h4 class=" heading glyphicons list"><i></i>Albums</h4>
+							</div>
+							<div class="menu list-unstyled">
+								{{if len(albums['public']) >= 1:}}
+									<li class="hasSubmenu panel-heading alert-danger">
+										<a href="#public-album-list" data-toggle="collapse" class="glyphicons show_big_thumbnails"><i></i><h4>My Public Albums - </h4></a>
+										<ul id="public-album-list" class="collapse">
+											{{for album in albums['public']:}}
+												<li><a href="{{=URL('profile', 'albums', vars=dict(album_key=album['albumKey']))}}"><span><strong>{{=album['name']}}</strong> - {{=album['description']}}</span></a>
+												</li>
+											{{pass}}
+										</ul>
+									</li>
+								{{pass}}
+								{{if len(albums['friends']) >= 1:}}
+									<li class="hasSubmenu panel-heading alert-warning">
+										<a href="#friends-album-list" data-toggle="collapse" class="glyphicons show_big_thumbnails"><i></i><h4>My albums for Friends - </h4></a>
+										<ul id="friends-album-list" class="collapse">
+											{{for album in albums['friends']:}}
+												<li><a href="{{=URL('profile', 'albums', vars=dict(album_key=album['albumKey']))}}"><span><strong>{{=album['name']}}</strong> - {{=album['description']}}</span></a>
+												</li>
+											{{pass}}
+										</ul>
+									</li>
+								{{pass}}
+								{{if len(albums['goodFriends']) >= 1:}}
+									<li class="hasSubmenu panel-heading alert-info">
+										<a href="#goodFriends-album-list" data-toggle="collapse" class="glyphicons show_big_thumbnails"><i></i><h4>My albums for Good Friends - </h4></a>
+										<ul id="goodFriends-album-list" class="collapse">
+											{{for album in albums['goodFriends']:}}
+												<li><a href="{{=URL('profile', 'albums', vars=dict(album_key=album['albumKey']))}}"><span><strong>{{=album['name']}}</strong> - {{=album['description']}}</span></a>
+												</li>
+											{{pass}}
+										</ul>
+									</li>
+								{{pass}}
+								{{if len(albums['innerCircle']) >= 1:}}
+									<li class="hasSubmenu panel-heading alert-success">
+										<a href="#innerCircle-album-list" data-toggle="collapse" class="glyphicons show_big_thumbnails"><i></i><h4>My albums for my Inner Circle - </h4></a>
+										<ul id="innerCircle-album-list" class="collapse">
+											{{for album in albums['innerCircle']:}}
+												<li><a href="{{=URL('profile', 'albums', vars=dict(album_key=album['albumKey']))}}"><span><strong>{{=album['name']}}</strong> - {{=album['description']}}</span></a>
+												</li>
+											{{pass}}
+										</ul>
+									</li>
+								{{pass}}
+								{{if len(albums['private']) >= 1:}}
+									<li class="hasSubmenu panel-heading alert-primary">
+										<a href="#private-album-list" data-toggle="collapse" class="glyphicons show_big_thumbnails"><i></i><h4>My Private Albums - </h4></a>
+										<ul id="private-album-list" class="collapse">
+											{{for album in albums['private']:}}
+												<li><a href="{{=URL('profile', 'albums', vars=dict(album_key=album['albumKey']))}}"><span><strong>{{=album['name']}}</strong> - {{=album['description']}}</span></a>
+												</li>
+											{{pass}}
+										</ul>
+									</li>
+								{{pass}}
+								{{if len(albums['blocked']) >= 1:}}
+									<li class="hasSubmenu panel-heading alert-default">
+										<a href="#blocked-album-list" data-toggle="collapse" class="glyphicons show_big_thumbnails"><i></i><h4>My Blocked Albums - </h4></a>
+										<ul id="blocked-album-list" class="collapse">
+											{{for album in albums['blocked']:}}
+												<li><a href="{{=URL('profile', 'albums', vars=dict(album_key=album['albumKey']))}}"><span><strong>{{=album['name']}}</strong> - {{=album['description']}}</span></a>
+												</li>
+											{{pass}}
+										</ul>
+									</li>
+								{{pass}}
+							</div>
+						</div>
+						<!-- //Widget -->
+					</div>
+					<!-- //End Col -->
+					<div class="col-md-4">
+						<!-- Widget -->
+						<div class="widget widget-body-white padding-none">
+							<div class="widget-head">
+								<h4 class="heading "><i class="fa fa-fw fa-user"></i> Account Information</h4>
+							</div>
+							<div class="widget-body padding-none">
+								<div class="bg-gray innerAll">
+									<i class="fa fa-5x icon-paper-documents-image text-primary pull-right"></i>
+									<div class="strong">
+										<p>Gender: {{=account['gender']}}</p>
+										<p>Phone: {{=account['phone']}}</p>
+										<p>Address: {{=account['address']}}</p>
+										<p>City: {{=account['city']}}</p>
+										<p>State: {{=account['state']}}</p>
+										<p>Zip: {{=account['country']}}</p>
+										<p>Country: {{=account['zip_code']}}</p>
+										<p>Status: {{=account['status']}}</p>
+										<p>Primary E-mail: {{=account['eMail']}}</p>
+										<p>Member Since: {{=account['created'].strftime("%d/%m/%Y")}}</p><br>
+										<h4>Default settings</h4>
+										<p>Add new Friends as: {{=account['friend']}}</p>
+										<p>New status updates are: {{=account['blog']}}</p>
+										<p>New Albums are: {{=account['album']}}</p>
+									</div>
+								</div>
+								<div class="innerAll half text-center">
+									<a href="{{=URL('dashboard', 'account')}}" class="text-underline">Edit Acount Settings</a>
+								</div>
+							</div>
+						</div>
+						<!-- //Widget -->
+					</div>
+					<!-- //End Col -->
+					<div class="col-md-4">
+						<!-- Widget -->
+						<div class="widget">
+							<div class="innerAll border-bottom">
+								<div class="media innerAll half">
+									<div class="media-body ">
+										<h5 class="margin-none strong">{{=title['set4']}}</h5>
+										<div class="">
+											{{=title['subtitle4']}}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- //Widget -->
+						<!-- Widget	 -->
+						<div class="widget widget-body-white padding-none ">
+							<div class="widget-head height-auto">
+								<div class="media innerAll">
+									<a href="" class="pull-right"><i class="fa icon-comment-fill-2"></i></a>
+									<a href="{{=URL('dashboard', 'account')}}" class="pull-left">
+										<img src="{{if basicData['backgroundImg']:}}{{=URL('api_shar','image',args=basicData['backgroundImg'])}}{{else:}}{{=URL('static','images/no-image.jpg')}}{{pass}}"
+										alt="" style="width:50%">
+									</a>
+									<div class="media-body">
+										<h4>Change Profile Banner</h4>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- //Widget -->
+					</div>
+					<!-- //End Col -->
+				</div>
+				<!-- End Row -->
+			</div>

@@ -1,0 +1,236 @@
+{{extend 'layoutA.html'}}
+<div class="jumbotron" style="padding-top:5px;padding-bottom:5px">
+	<div class="container">
+		<div style='padding:5px;position:relative'>
+			<div id='wrap' style="width: 600px;height: 350px;">
+				<div id="IframeWrapper" style="position: relative;">
+					<div id="iframeBlocker" style="position: absolute; top: 0; left: 0; width: 600px; height: 350px;z-index:99" ng-click="viewProfile()"></div>
+					<iframe id="frame" style="width: 1200px;height: 700px;" src="{{=URL('profile','index')}}"></iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<form class="form-signin" role="form" ng-submit="changedProfile()">
+	<button class="btn btn-lg btn-primary btn-block" style="visibility:hidden;" ng-click='changedProfile()'>Update Profile</button>
+	<div class="row">
+		<h2><i class="fa fa-book"></i> Edit Profile:<small> click profile to view</small></h2>
+		<div class='col-md-4'>
+			<div ng-class="{'panel panel-default': profileFormData.viewLevel == '1', 'panel panel-success': profileFormData.viewLevel == '2', 'panel panel-info': profileFormData.viewLevel == '3', 'panel panel-warning': profileFormData.viewLevel == '4', 'panel panel-danger': profileFormData.viewLevel == '5'}" ng-click="albumDetails(profileFormData.albumId)">
+				<div class="panel-heading">
+					<strong class="panel-title">Profile View Option</strong>
+				</div>
+				<div class="panel-body">
+					<label>Who can view my Profile:
+						<select name="permissions" class="form-control" ng-class="{'alert-success': profileFormData.viewLevel == '2', 'alert-info': profileFormData.viewLevel == '3', 'alert-warning': profileFormData.viewLevel == '4', 'alert-danger': profileFormData.viewLevel == '5'}" ng-model="profileFormData.viewLevel" ng-change='changedProfile()'>
+							<option class="panel panel-default"value="1">Private</option>
+							<option class="alert alert-success" value="2">Inner Circle</option>
+							<option class="alert alert-info" value="3">Good Friends</option>
+							<option class="alert alert-warning" value="4">Friends</option>
+							<option class="alert alert-danger" value="5">Public</option>
+						</select>
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class='col-md-4'>
+			<div ng-class="{'panel panel-default': profileFormData.viewLevel == '1', 'panel panel-success': profileFormData.viewLevel == '2', 'panel panel-info': profileFormData.viewLevel == '3', 'panel panel-warning': profileFormData.viewLevel == '4', 'panel panel-danger': profileFormData.viewLevel == '5'}" ng-click="albumDetails(profileFormData.albumId)">
+				<div class="panel-heading">
+					<strong class="panel-title">Profile Name</strong>
+				</div>
+				<div class="panel-body">
+					<input type="text" class="form-control" ng-model="profileFormData.name" required autofocus>
+				</div>
+			</div>
+		</div>
+		<div class='col-md-4'>
+			<div ng-class="{'panel panel-default': profileFormData.viewLevel == '1', 'panel panel-success': profileFormData.viewLevel == '2', 'panel panel-info': profileFormData.viewLevel == '3', 'panel panel-warning': profileFormData.viewLevel == '4', 'panel panel-danger': profileFormData.viewLevel == '5'}" ng-click="albumDetails(profileFormData.albumId)">
+				<div class="panel-heading">
+					<strong class="panel-title">Tag Line</strong>
+				</div>
+				<div class="panel-body">
+					<input type="text" class="form-control" ng-model="profileFormData.tagLine" required>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class='col-md-3'>
+			<div ng-class="{'panel panel-default': profileFormData.viewLevel == '1', 'panel panel-success': profileFormData.viewLevel == '2', 'panel panel-info': profileFormData.viewLevel == '3', 'panel panel-warning': profileFormData.viewLevel == '4', 'panel panel-danger': profileFormData.viewLevel == '5'}">
+				<div class="panel-heading">
+					<strong class="panel-title">Profile Picture</strong>
+				<div ng-if="profileFormData.profileImg" ng-click="changeProfileImg()">
+					<a href="" style="padding:25px">Change Profile Image</a>
+				</div>
+				</div>
+				<div ng-if="!profileFormData.profileImg">
+					<span style="padding:5px">Select a profile image from albums</span>
+					<ul>
+						<li ng-repeat="album in albums | orderBy:sortBy " style="margin:10px;padding:" ng-class="{'panel-default': album.viewLevel == '1', 'alert-success': album.viewLevel == '2', 'alert-info': album.viewLevel == '3', 'alert-warning': album.viewLevel == '4', 'alert-danger': album.viewLevel == '5'}" ng-click="pickProfileImg(album)">
+							<span>{!album.name!} - images: {!album.media.length!}</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class='col-md-3'>
+			<div ng-class="{'panel panel-default': profileFormData.viewLevel == '1', 'panel panel-success': profileFormData.viewLevel == '2', 'panel panel-info': profileFormData.viewLevel == '3', 'panel panel-warning': profileFormData.viewLevel == '4', 'panel panel-danger': profileFormData.viewLevel == '5'}">
+				<div class="panel-heading">
+					<strong class="panel-title">Background Image</strong>
+				<div ng-if="profileFormData.backgroundImg" ng-click="changeBackGroundImg()">
+					<a href="" style="padding:25px">Change Background Image</a>
+				</div>
+				</div>
+				<div ng-if="!profileFormData.backgroundImg">
+					<span style="padding:5px">Select a background image from albums</span>
+					<ul>
+						<li ng-repeat="album in albums | orderBy:sortBy " style="margin:10px;padding:" ng-class="{'panel-default': album.viewLevel == '1', 'alert-success': album.viewLevel == '2', 'alert-info': album.viewLevel == '3', 'alert-warning': album.viewLevel == '4', 'alert-danger': album.viewLevel == '5'}" ng-click="pickBackGroundImg(album)">
+							<span>{!album.name!} - images: {!album.media.length!}</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class='col-md-3'>
+			<div ng-class="{'panel panel-default': profileFormData.viewLevel == '1', 'panel panel-success': profileFormData.viewLevel == '2', 'panel panel-info': profileFormData.viewLevel == '3', 'panel panel-warning': profileFormData.viewLevel == '4', 'panel panel-danger': profileFormData.viewLevel == '5'}" ng-click="albumDetails(profileFormData.albumId)">
+				<div class="panel-heading">
+					<strong class="panel-title">Gender</strong>
+				</div>
+				<div ng-if="account.gender!='undeclared'" class="panel-body">
+					<label for="displayGender">Display Gender
+					</label>
+					<input type="checkbox" name="imageChange" ng-model="displayGender" ng-click="addProfileData('gender')">
+					<span ng-if="!displayGender">In order to search profiles by "gender", you must share your gender</span>
+				</div>
+				<div ng-if="account.gender=='undeclared'" class="panel-body">
+					<span>In order to search profiles by "gender", you must first declare a Gender:</span><br>
+					<select name="accountGender" class="form-control" ng-model="accountGender" ng-change="addProfileData('accountGender')">
+						<option value="9">Business</option>
+						<option value="8">Club</option>
+						<option value="7">Group</option>
+						<option value="6">Couple-MM</option>
+						<option value="5">Couple-FF</option>
+						<option value="4">Couple-MF</option>
+						<option value="3">TS/TV/TG</option>
+						<option value="2">Female</option>
+						<option value="1">Male</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class='col-md-3'>
+			<div ng-class="{'panel panel-default': profileFormData.viewLevel == '1', 'panel panel-success': profileFormData.viewLevel == '2', 'panel panel-info': profileFormData.viewLevel == '3', 'panel panel-warning': profileFormData.viewLevel == '4', 'panel panel-danger': profileFormData.viewLevel == '5'}" ng-click="albumDetails(profileFormData.albumId)">
+				<div class="panel-heading">
+					<strong class="panel-title">Location Info</strong>
+				</div>
+				<div class="panel-body">
+					<input type="text" class="form-control">
+				</div>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+<div id="wrapper" class="container">
+	<div id="columns" class="row">
+		<div class="pin">
+			<div ng-class="{'panel panel-default': profileFormData.viewLevel == '1', 'panel panel-success': profileFormData.viewLevel == '2', 'panel panel-info': profileFormData.viewLevel == '3', 'panel panel-warning': profileFormData.viewLevel == '4', 'panel panel-danger': profileFormData.viewLevel == '5'}">
+				<div class="panel-heading">
+					<strong class="panel-title">Account Gender</strong>
+				</div>
+				<div ng-if="account.gender!='undeclared'" class="panel-body">
+					<label for="displayGender">Display Gender
+					</label>
+					<input type="checkbox" name="imageChange" ng-model="displayGender" ng-click="addProfileData('gender')">
+				</div>
+				<div ng-if="account.gender=='undeclared'" class="panel-body">
+					<span>Declare a Gender:</span><br>
+					<select name="accountGender" class="form-control" ng-model="accountGender" ng-change="addProfileData('accountGender')">
+						<option value="9">Business</option>
+						<option value="8">Club</option>
+						<option value="7">Group</option>
+						<option value="6">Couple-MM</option>
+						<option value="5">Couple-FF</option>
+						<option value="4">Couple-MF</option>
+						<option value="3">TS/TV/TG</option>
+						<option value="2">Female</option>
+						<option value="1">Male</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="pin">
+			<div ng-class="{'panel panel-default': profileFormData.viewLevel == '1', 'panel panel-success': profileFormData.viewLevel == '2', 'panel panel-info': profileFormData.viewLevel == '3', 'panel panel-warning': profileFormData.viewLevel == '4', 'panel panel-danger': profileFormData.viewLevel == '5'}">
+				<div class="panel-heading">
+					<strong class="panel-title">Profile Picture</strong>
+				</div>
+				<div class="panel-body">
+					<span>Whoa, stuff here</span>
+				</div>
+			</div>
+		</div>
+		<div class="pin">
+			<div ng-class="{'panel panel-default': profileFormData.viewLevel == '1', 'panel panel-success': profileFormData.viewLevel == '2', 'panel panel-info': profileFormData.viewLevel == '3', 'panel panel-warning': profileFormData.viewLevel == '4', 'panel panel-danger': profileFormData.viewLevel == '5'}">
+				<div class="panel-heading">
+					<strong class="panel-title">Background Image</strong>
+				</div>
+				<div class="panel-body">
+					<span>Whoa, stuff here</span>
+				</div>
+			</div>
+		</div>
+		<div class="pin">
+			<div ng-class="{'panel panel-default': profileFormData.viewLevel == '1', 'panel panel-success': profileFormData.viewLevel == '2', 'panel panel-info': profileFormData.viewLevel == '3', 'panel panel-warning': profileFormData.viewLevel == '4', 'panel panel-danger': profileFormData.viewLevel == '5'}">
+				<div class="panel-heading">
+					<strong class="panel-title">Display Location Info</strong>
+				</div>
+				<div class="panel-body">
+					<span>Whoa, stuff here</span>
+				</div>
+			</div>
+		</div>
+		<div ng-if="profileFormData.data" class="pin" ng-repeat="info in profile.data">
+			<div ng-class="{'panel panel-default': profileFormData.viewLevel == '1', 'panel panel-success': profileFormData.viewLevel == '2', 'panel panel-info': profileFormData.viewLevel == '3', 'panel panel-warning': profileFormData.viewLevel == '4', 'panel panel-danger': profileFormData.viewLevel == '5'}">
+				<div class="panel-heading">
+					<strong class="panel-title">{!image.fileName!}</strong>
+				</div>
+				<div class="panel-body">
+					<span>Whoa, stuff here</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div ng-if="selectImageModal" class="reg-modul">
+	<div id="wrapper">
+		<div id="columns">
+			<div class="pin" ng-repeat="image in selectImage" ng-click="updateProfileImage(image)">
+				<div ng-class="{'panel panel-default': image.viewLevel == '1', 'panel panel-success': image.viewLevel == '2', 'panel panel-info': image.viewLevel == '3', 'panel panel-warning': image.viewLevel == '4', 'panel panel-danger': image.viewLevel == '5'}">
+					<div class="panel-heading">
+						<strong class="panel-title">{!image.fileName!}</strong>
+					</div>
+					<div class="panel-body">
+						<img src="/init/api_shar/image/{!image.thumbnail!}">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div ng-if="selectBackGroundModal" class="reg-modul">
+	<div id="wrapper">
+		<div id="columns">
+			<div class="pin" ng-repeat="image in selectImage" ng-click="updateBackGroundImage(image)">
+				<div ng-class="{'panel panel-default': image.viewLevel == '1', 'panel panel-success': image.viewLevel == '2', 'panel panel-info': image.viewLevel == '3', 'panel panel-warning': image.viewLevel == '4', 'panel panel-danger': image.viewLevel == '5'}">
+					<div class="panel-heading">
+						<strong class="panel-title">{!image.fileName!}</strong>
+					</div>
+					<div class="panel-body">
+						<img src="/init/api_shar/image/{!image.thumbnail!}">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

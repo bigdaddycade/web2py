@@ -1,0 +1,55 @@
+
+							<div class="cover">
+								<div class="top" style="background-image: url('{{if profile['backgroundImg']:}}{{=URL('api_shar','image',args=profile['backgroundImg'])}}{{else:}}{{=URL('static','images/no-image.jpg')}}{{pass}}');background-position: center center;background-repeat: no-repeat;background-size: 100% auto;">
+								</div>
+								<ul class="list-unstyled">
+									<li {{if request.function == 'index':}}class="active"{{pass}}><a href="#"><i class="fa fa-fw fa-clock-o"></i> <span>Recent Activity</span></a>
+									</li>
+									{{if request.vars.account_key:}}
+									<li {{if request.function == 'about':}}class="active"{{pass}}><a href="{{=URL('profile', 'about', vars=dict(account_key=request.vars.account_key))}}"><i class="fa fa-fw fa-user"></i> <span>About</span></a>
+									</li>
+									<li {{if request.function == 'albums':}}class="active"{{pass}}><a href="{{=URL('profile', 'albums', vars=dict(account_key=request.vars.account_key))}}"><i class="fa fa-fw icon-photo-camera"></i> <span>Photos </span><small>({{=photoCount}})</small></a>
+									</li>
+									<li {{if request.function == 'friends':}}class="active"{{pass}}><a href="{{=URL('profile', 'friends', vars=dict(account_key=request.vars.account_key))}}"><i class="fa fa-fw icon-group"></i><span>Friends </span><small>({{=friendCount}})</small></a>
+									</li>
+									{{else:}}
+									<li {{if request.function == 'about':}}class="active"{{pass}}><a href="{{=URL('profile', 'about')}}"><i class="fa fa-fw fa-user"></i> <span>About</span></a>
+									</li>
+									<li {{if request.function == 'albums':}}class="active"{{pass}}><a href="{{=URL('profile', 'albums')}}"><i class="fa fa-fw icon-photo-camera"></i> <span>Photos </span><small>({{=photoCount}})</small></a>
+									</li>
+									<li {{if request.function == 'friends':}}class="active"{{pass}}><a href="{{=URL('profile', 'friends')}}"><i class="fa fa-fw icon-group"></i><span>Friends </span><small>({{=friendCount}})</small></a>
+									</li>
+									{{pass}}
+									{{if messageButton:}}
+									<li><a href="{{=URL('messages', 'index', vars=dict(account_key=request.vars.account_key, flag='new'))}}"><i class="fa fa-fw icon-envelope-fill-1"></i> <span> Send Message</span></a></li>
+									{{pass}}
+								</ul>
+							</div>
+							{{if request.controller == 'profile' and request.function == 'albums':}}
+								{{if request.vars.album_key:}}
+									<div class="widget">
+										<div class="widget-head">
+											<h4 class="heading">{!album.name!}</h4>
+											<span class="pull-right">{!album.description!}</span>
+										</div>
+										<div class="widget-body padding-none margin-none">
+											<div class="innerAll">
+												<div class="input-group">
+													<input class="form-control" id="appendedInputButtons" type="text" placeholder="Leave a comment on this album..." ng-model="albumCommentData.commentT"  ng-keyup="$event.keyCode==13 ? postAlbumComment() : null">
+													<div class="input-group-btn">
+														<button class="btn btn-inverse" type="button" ng-click="postAlbumComment()">Post</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								{{else:}}
+									<div class="widget">
+										<div class="widget-body padding-none margin-none">
+											<div class="innerAll">
+												<h3>Photo Gallery</h3>
+											</div>
+										</div>
+									</div>
+								{{pass}}
+							{{pass}}

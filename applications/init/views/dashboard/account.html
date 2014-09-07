@@ -1,0 +1,215 @@
+{{extend 'layoutTAcc.html'}}<!-- <div class="layout-app">  -->
+			<div class="innerLR" ng-controller="dashboardaccount">
+				<h2 class="margin-none">{{=title['main']}}<i class="fa fa-fw fa-pencil text-muted"></i>
+				</h2>
+				<div class="separator-h"></div>
+				<div class="row">
+					<div class="col-md-4">
+						<!-- Widget -->
+						<div class="widget widget-body-white">
+							<div class="media widget-body innerAll">
+								<a href="" class="pull-left">
+									<img src="{{if basicData['profileImg']:}}{{=URL('api_shar','image',args=basicData['profileImg'])}}{{else:}}{{=URL('static','images/no-image.jpg')}}{{pass}}" width="60"
+									alt="">
+								</a>
+								<div class="media-body innerL half">
+									<h4 class="margin-none"><a href="" class="text-primary">{{=basicData['profileName']}}</a>
+									</h4>
+									<p class="strong">{{=basicData['profileTag']}}</p>
+									<div class="bg-gray innerAll ">
+										<h5 class="innerB half border-bottom text-muted margin-none">Logged in as {{=basicData['name']}}</h5>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- //Widget -->
+						<!-- Widget -->
+						<div class="widget widget-body-white ">
+							<div class="widget-head">
+								<h4 class=" heading glyphicons list"><i></i>Default Values</h4>
+							</div>
+							<div class="widget-body">
+								<div class="innerAll">
+									<span>Choose the defaults for your account:</span><br>
+									<label>Add new friends as:
+										<select name="permissions" class="form-control" ng-class="{'alert-success': accountFormData.friendLevel == '2', 'alert-info': accountFormData.friendLevel == '3', 'alert-warning': accountFormData.friendLevel == '4', 'alert-danger': accountFormData.friendLevel == '5'}" ng-model="accountFormData.friendLevel" ng-change="upDateAccount()">
+											<option class="alert-success" value="2">Inner Circle</option>
+											<option class="alert-info" value="3">Good Friends</option>
+											<option class="alert-warning" value="4">Friends</option>
+											<option class="alert-danger" value="5">Public</option>
+										</select>
+									</label><br>
+									<label>Post my updates to:
+										<select name="permissions" class="form-control" ng-class="{'alert-success': accountFormData.blogLevel == '2', 'alert-info': accountFormData.blogLevel == '3', 'alert-warning': accountFormData.blogLevel == '4', 'alert-danger': accountFormData.blogLevel == '5'}" ng-model="accountFormData.blogLevel" ng-change="upDateAccount()">
+											<option value="1">Private</option>
+											<option class="alert-success" value="2">Inner Circle</option>
+											<option class="alert-info" value="3">Good Friends</option>
+											<option class="alert-warning" value="4">Friends</option>
+											<option class="alert-danger" value="5">Public</option>
+										</select>
+									</label><br>
+									<label>Create new albums for:
+										<select name="permissions" class="form-control" ng-class="{'alert-success': accountFormData.albumLevel == '2', 'alert-info': accountFormData.albumLevel == '3', 'alert-warning': accountFormData.albumLevel == '4', 'alert-danger': accountFormData.albumLevel == '5'}" ng-model="accountFormData.albumLevel" ng-change="upDateAccount()">
+											<option value="1">Private</option>
+											<option class="alert-success" value="2">Inner Circle</option>
+											<option class="alert-info" value="3">Good Friends</option>
+											<option class="alert-warning" value="4">Friends</option>
+											<option class="alert-danger" value="5">Public</option>
+										</select>
+									</label>
+								</div>
+							</div>
+						</div>
+						<!-- //Widget -->
+						<h3>{!updateMessage!}</h3>
+						<!-- Widget -->
+						<div class="widget widget-body-white">
+							<div class="widget-head">
+								<h4 class=" heading glyphicons parents"><i></i>Profile Gender</h4>
+							</div>
+							<div class="widget-body inner-2x">
+								<span ng-if="accountFormData.gender == '10'" class="alert-danger">You can not search by "gender" till this is set. If you are not single, this represents your profile gender and NOT your indiviual gender, which is set in "moderators":</span>
+								<select  ng-model="accountFormData.gender" ng-change="upDateAccount()" class="panel-primary panel-title">
+									<option value="1">Male</option>
+									<option value="2">Female</option>
+									<option value="3">TS/TV/TG</option>
+									<option value="4">Couple-MF</option>
+									<option value="5">Couple-FF</option>
+									<option value="6">Couple-MM</option>
+									<option value="7">Group</option>
+									<option value="8">Club</option>
+									<option value="9">Business</option>
+									<option value="10">undeclared</option>
+								</select>
+							</div>
+						</div>
+						<!-- //Widget -->
+					</div>
+					<!-- //End Col -->
+					<div class="col-md-4">
+						<!-- Widget -->
+						<div class="widget widget-body-white padding-none">
+							<div class="widget-head">
+								<h4 class="heading "><i class="fa fa-fw fa-user"></i> Account Overview</h4>
+							</div>
+							<div class="widget-body padding-none">
+								<div class="bg-gray innerAll">
+									<i class="fa fa-5x icon-paper-documents-image text-primary pull-right"></i>
+									<div class="strong">
+										<p>Status: {{=account['status']}}</p>
+										<p>Primary E-mail: {{=account['eMail']}}</p>
+									</div>
+								</div>
+								<div class="innerAll half text-center">
+									<a href="" class="text-underline">Go to Profile</a>
+								</div>
+							</div>
+						</div>
+						<!-- //Widget -->
+						<!-- Widget -->
+						<div ng-if="!profileImgSelect && !backgroundImgSelect" class="widget widget-body-white overflow-hidden">
+							<div class="widget-head height-auto ">
+								<div class="innerAll">
+									<h4 class="text-uppercase text-primary margin-none">{{=title['form2']}}</h4>
+								</div>
+							</div>
+							<div class="widget-body">
+								<div class="">
+									{{=title['subtitle2']}}
+									{{=form2}}
+								</div>
+							</div>
+						</div>
+						<!-- //Widget -->
+						<!-- Widget -->
+						<div ng-if="profileImgSelect" class="widget widget-body-white overflow-hidden">
+							<div class="widget-head height-auto ">
+								<div class="innerAll">
+									<h4 class="text-uppercase text-primary margin-none">Select a Profile Image</h4>
+								</div>
+							</div>
+							<div class="widget-body">
+							<a href="" class="btn btn-default pull-right" ng-click="showImageEdit()">Cancel</a>
+								<div ng-repeat="album in albums" class="" ng-click="showAlbum(album)">
+									<p><strong>{!album.name!}</strong> {!album.description!} ({!album.media.length!} images)</p>
+								</div>
+								<div class="">
+									<h5>{!currentAlbum.name!}</h5>
+									<img ng-repeat="media in currentAlbum.media" src="/init/api_shar/image/{!media.thumb_data!}"
+										alt="" style="height:75px;padding:5px" ng-click="updateProfileImage(media)">
+								</div>
+							</div>
+						</div>
+						<!-- //Widget -->
+						<!-- Widget -->
+						<div ng-if="backgroundImgSelect" class="widget widget-body-white overflow-hidden">
+							<div class="widget-head height-auto ">
+								<div class="innerAll">
+									<h4 class="text-uppercase text-primary margin-none">Select a background banner</h4>
+								</div>
+							</div>
+							<div class="widget-body">
+							<a href="" class="btn btn-default pull-right" ng-click="showImageEdit()">Cancel</a>
+								<div ng-repeat="album in albums" class="" ng-click="showAlbum(album)">
+									<p><strong>{!album.name!}</strong> {!album.description!} ({!album.media.length!} images)</p>
+								</div>
+								<div class="">
+									<h5>{!currentAlbum.name!}</h5>
+									<img ng-repeat="media in currentAlbum.media" src="/init/api_shar/image/{!media.banner_data!}"
+										alt="" style="height:75px;padding:5px" ng-click="updateBackGroundImage(media)">
+								</div>
+							</div>
+						</div>
+						<!-- //Widget -->
+					</div>
+					<!-- //End Col -->
+					<div class="col-md-4">
+						<!-- Widget -->
+						<div class="widget">
+							<div class="innerAll border-bottom">
+								<div class="media innerAll half">
+									<div class="media-body ">
+										<h5 class="margin-none strong">{{=title['form4']}}</h5>
+										<div class="">
+											{{=title['subtitle4']}}
+											{{=form4}}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- //Widget -->
+						<!-- Widget	 -->
+						<div class="widget widget-body-white padding-none ">
+							<div class="widget-head height-auto">
+								<div class="media innerAll">
+									<a href="" class="pull-left" ng-click="showImageEdit('image')">
+										<div class="media-body">
+											<h4>Change Profile Image</h4>
+										</div>
+										<img ng-if="profile.profileImg" src="/init/api_shar/image/{!profile.profileImg!}"
+										alt="" style="height:75px">
+										<img ng-if="!profile.profileImg" src="/init/static/images/no-image.jpg"
+										alt="" style="height:75px">
+									</a>
+									<a href="" class="pull-left" ng-click="showImageEdit('background')">
+										<div class="media-body">
+											<h4>Change background Image</h4>
+										</div>
+										<img ng-if="profile.backgroundImg" src="/init/api_shar/image/{!profile.backgroundImg!}"
+										alt="" style="height:75px">
+										<img ng-if="!profile.backgroundImg" src="/init/static/images/no-image.jpg"
+										alt="" style="height:75px">
+									</a>
+									<div>
+										{!profile!}
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- //Widget -->
+					</div>
+					<!-- //End Col -->
+				</div>
+				<!-- End Row -->
+			</div>

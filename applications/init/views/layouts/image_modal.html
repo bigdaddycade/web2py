@@ -1,0 +1,99 @@
+<div ng-if="!showBigImage && !showComments" id="footer" class="hidden-print">
+			<!--  Copyright Line -->
+			<div class="copy">&copy; 2014 - <a href="http://www.sharotica.com">Sharotica</a> -
+				All Rights Reserved. 
+			</div>
+			<!--  End Copyright Line -->
+		</div>
+		<div ng-if="showBigImage" class="reg-modul">
+	<div class="big-image-wrapper">
+		<div class="master-click">
+			<a class="btn btn-default" ng-click="bigImageToggle()"><i class="fa fa-2x fa-times-circle"></i></a>
+		</div>
+		<div class="comment-like">
+			<a class="btn btn-default" ng-click="commentsModalToggle()"><i class="fa fa-2x fa-comment"></i></a>
+			<a ng-if="!album.media[mediaIndex].isLiked" class="btn btn-default" ng-click="likeThisMedia('like', album.media[mediaIndex].mediaId)"><i class="fa fa-2x fa-thumbs-up"></i><span ng-if="album.media[mediaIndex].likes != 0"> {!album.media[mediaIndex].likes!}</span></a>
+			<a ng-if="album.media[mediaIndex].isLiked == true && album.media[mediaIndex].likes == 1" class="btn btn-default" ng-click="likeThisMedia('unlike', album.media[mediaIndex].mediaId)"><i class="fa fa-2x fa-thumbs-o-up"></i><span ng-if="album.media[mediaIndex].likes != 0"> you liked</span></a>
+			<a ng-if="album.media[mediaIndex].isLiked == true && album.media[mediaIndex].likes >= 2" class="btn btn-default" ng-click="likeThisMedia('unlike', album.media[mediaIndex].mediaId)"><i class="fa fa-2x fa-thumbs-o-up"></i><span ng-if="album.media[mediaIndex].likes != 0"> {!album.media[mediaIndex].likes - 1!} and you</span></a>
+			<a ng-if="album.media[mediaIndex].isLiked == 'self'" class="btn btn-default disabled"><span ng-if="album.media[mediaIndex].likes != 0">{!album.media[mediaIndex].likes!} </span><i class="fa fa-2x fa-thumbs-o-up"></i></a>
+		</div>
+		<div class="img-holder"> 
+			<img id="bigImage" src="/init/api_shar/image/{!album.media[mediaIndex].media_data!}" class="background_image pull-left" style="max-width:100%;max-height:100%">
+			<div class="img-inner-left pointer" ng-click="changeImage('back')" ng-keyup="$event.keyCode==37 ? changeImage('back') : $event.keyCode==39 ? changeImage('next') : null" tabindex="1">
+				<div class="previous-img">
+					<i class="fa fa-caret-left fa-3x pull-left"></i>
+				</div>
+			</div>
+			<div class="img-inner-right pointer" ng-click="changeImage('next')" ng-keyup="$event.keyCode==37 ? changeImage('back') : $event.keyCode==39 ? changeImage('next') : null" tabindex="2">
+				<div class="next-img">
+					<i class="fa fa-caret-right fa-3x pull-right"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div ng-if="showComments" class="reg-modul" ng-keyup="$event.keyCode==37 ? changeImage('back') : $event.keyCode==39 ? changeImage('next') : null">
+	<div class="container" style="margin-top:20px">
+		<div class="row">
+			<a class="btn btn-default master-click" ng-click="bigImageToggle()"><i class="fa fa-2x fa-times-circle" style="z-index:9999;"></i></a>
+			<div class="col-md-10 col-md-offset-1">
+				<div class="col-md-4">
+					<a class="btn btn-default pull-left" ng-click="bigImageToggle('show',mediaIndex)"><i class="fa fa-2x fa-arrows-alt"></i></a>
+					<br><br>
+					<h4 style="color:#fff">{!album.media[mediaIndex].fileName!}</h4>
+					<h5 style="color:#fff">{!album.media[mediaIndex].description!}</h5>
+					<div class="input-group">
+						<input class="form-control" id="appendedInputButtons" type="text" placeholder="Leave a comment..." ng-model="mediaCommentData.commentT" ng-keyup="$event.keyCode==13 ? postMediaComment() : null">
+						<div class="input-group-btn">
+							<button class="btn btn-inverse" type="button" ng-click="postMediaComment()">Post</button>
+						</div>
+					</div>
+					<br>
+					<div class="widget">
+						<h5 class="innerAll margin-none border-bottom bg-gray">{!album.media[mediaIndex].fileName!} Comments <span ng-if="mediaComments">({!mediaComments.length!})</span></h5>
+						<div ng-if="mediaComments" class="widget-body padding-none">
+							<div class="media border-bottom innerAll margin-none" ng-repeat="comment in mediaComments | limitTo: 5">
+								<a ng-if="comment.edit" href="" class="pull-right" ng-click="deleteComment(comment.id, $index, 'media')"><i class="fa fa-times-circle"></i></a>
+								<a href="/init/profile/about?account_key={!comment.posterKey!}" class="text-inverse">
+									<img src="/init/api_shar/image/{!comment.posterImg!}" class="pull-left media-object" style="width:50px;padding-right:5px"/>
+									<div class="media-body">
+										<h5 class="margin-none"><b>{!comment.posterName!}:</b></h5>
+										
+										<span>{!comment.commentText!}</span>
+										<br>
+										<small>{!comment.created!}</small>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div ng-if="!mediaComments" class="widget-body padding-none">
+							<div class="media border-bottom innerAll margin-none">
+								<img src="{{if profile['profileImg']:}}{{=URL('api_shar','image',args=profile['profileImg'])}}{{else:}}{{=URL('static','images/no-image.jpg')}}{{pass}}" class="pull-left media-object" style="width:50px"/>
+								<div class="media-body">
+									<h5 class="margin-none"><strong>No one has commented on "{!album.media[mediaIndex].fileName!}" yet</strong>
+									</h5>
+									<span>Be the first!!!</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<div class="img-holder"> 
+						<img src="/init/api_shar/image/{!album.media[mediaIndex].media_data!}" class="background_image" style="max-width:100%;max-height:75%">
+						<div class="img-inner-left" ng-click="changeImage('back')" ng-keyup="$event.keyCode==37 ? changeImage('back') : $event.keyCode==39 ? changeImage('next') : null" tabindex="1">
+							<div class="previous-img">
+								<i class="fa fa-caret-left fa-3x pull-left"></i>
+							</div>
+						</div>
+						<div class="img-inner-right" ng-click="changeImage('next')" ng-keyup="$event.keyCode==37 ? changeImage('back') : $event.keyCode==39 ? changeImage('next') : null" tabindex="2">
+							<div class="next-img">
+								<i class="fa fa-caret-right fa-3x pull-right"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

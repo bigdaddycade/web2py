@@ -1,0 +1,60 @@
+{{extend 'layoutT.html'}}<!-- <div class="layout-app">  -->
+			<div class="innerLR">
+				<h2 class="margin-none">Browse Profiles<i class="fa fa-fw fa-pencil text-muted"></i>
+				</h2>
+				<div class="separator-h"></div>
+				<div class="row">
+					<div class="col-md-4">
+						<!-- Widget -->
+						<div class="widget widget-body-white">
+							<div class="media widget-body innerAll">
+								<a href="" class="pull-left">
+									<img src="{{if basicData['profileImg']:}}{{=URL('api_shar','image',args=basicData['profileImg'])}}{{else:}}{{=URL('static','images/no-image.jpg')}}{{pass}}" width="60"
+									alt="">
+								</a>
+								<div class="media-body innerL half">
+									<h4 class="margin-none"><a href="" class="text-primary">{{=basicData['profileName']}}</a>
+									</h4>
+									<p class="strong">{{=basicData['profileTag']}}</p>
+									<div class="bg-gray innerAll ">
+										<h5 class="innerB half border-bottom text-muted margin-none">Logged in as {{=basicData['name']}}</h5>
+										<p class="margin-none ">
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- //Widget -->
+						<!-- Widget -->
+						<div class="widget widget-body-white ">
+							<div class="widget-head">
+								<h4 class=" heading glyphicons list"><i></i>Friends</h4>
+							</div>
+						</div>
+						<!-- //Widget -->
+					</div>
+					<!-- //End Col -->
+					<div class="col-md-8">
+						<!-- Widget -->
+						<div class="widget widget-body-white padding-none">
+							<div class="widget-head">
+								<h4 class="heading "><i class="fa fa-fw fa-user"></i> Available Profiles</h4>
+							</div>
+							<div class="widget-body padding-none">
+								<div class="bg-gray innerAll">
+									{{for profile in profiles:}}
+										<a href="{{=URL('profile', 'about', vars=dict(account_key=profile['key']))}}"><div>
+											<img src="{{if profile['profileImg']:}}{{=URL('api_shar','image',args=profile['profileImg'])}}{{else:}}{{=URL('static','images/no-image.jpg')}}{{pass}}" alt="user" style="width:50px">
+											<P><strong>{{=profile['profileName']}}</strong> - {{=profile['profileTag']}}</p>
+										</div></a>
+										<br>
+									{{pass}}
+								</div>
+							</div>
+						</div>
+						<!-- //Widget -->
+					</div>
+					<!-- //End Col -->
+				</div>
+				<!-- End Row -->
+			</div>

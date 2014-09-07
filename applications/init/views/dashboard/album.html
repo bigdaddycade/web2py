@@ -1,0 +1,138 @@
+{{extend 'layoutA.html'}}
+<div class="jumbotron" ng-class="{'alert-success': album.viewLevel == '2', 'alert-info': album.viewLevel == '3', 'alert-warning': album.viewLevel == '4', 'alert-danger': album.viewLevel == '5'}" style="padding-top:15px;padding-bottom:15px">
+	<div class="container">
+		<div ng-if="!albumEdit">
+			<h2>{!album.name!}</h2>
+			<h3>{!album.description!}</h3>
+			<h4 ng-if="album.viewLevel == '1'">This Album is private</h4>
+			<h4 ng-if="album.viewLevel == '2'">Only my Inner Circle can see this Album</h4>
+			<h4 ng-if="album.viewLevel == '3'">Only my Good Friends can see this Album</h4>
+			<h4 ng-if="album.viewLevel == '4'">Only my Friends can see this Album</h4>
+			<h4 ng-if="album.viewLevel == '5'">This Album is Public, all can see</h4>
+			<a class="btn btn-success" ng-click="setToEditAlbum(album)">Edit Album <i class="fa fa-plus-square-o"></i></a>
+			<a class="btn btn-danger pull-right" ng-click="deleteAlbum()">Delete Album <i class="fa fa-trash-o"></i></a>
+		</div>
+		<div ng-if="albumEdit">
+			<form class="form-signin" role="form">
+				<a class="btn btn-default pull-right" ng-click="setToEditAlbum('nope')"><i class="fa fa-times-circle"></i></a>
+				<h3>Album Name</h3>
+				<input type="text" class="form-control" value="albumFormData.name" ng-model="albumFormData.name" required autofocus>
+				<h4 >Album Description</h4>
+				<input type="text" class="form-control" value="albumFormData.description" ng-model="albumFormData.description">
+				<label >Who can view this album:
+					<select name="permissions" class="form-control" ng-class="{'alert-success': albumFormData.viewLevel == '2', 'alert-info': albumFormData.viewLevel == '3', 'alert-warning': albumFormData.viewLevel == '4', 'alert-danger': albumFormData.viewLevel == '5'}" ng-model="albumFormData.viewLevel">
+						<option value="1">Private</option>
+						<option class="alert alert-success" value="2">Inner Circle</option>
+						<option class="alert alert-info" value="3">Good Friends</option>
+						<option class="alert alert-warning" value="4">Friends</option>
+						<option class="alert alert-danger" value="5">Public</option>
+					</select>
+				</label>
+				<div ng-if="albumFormData.viewLevel != album.viewLevel">
+					<p ng-class="{'alert-success': albumFormData.viewLevel == '2', 'alert-info': albumFormData.viewLevel == '3', 'alert-warning': albumFormData.viewLevel == '4', 'alert-danger': albumFormData.viewLevel == '5'}">You are changing album view permission, would you like to reset all the images in the album to this new level?<br>
+						<input type="checkbox" name="imageChange" ng-model="albumFormData.update"> Update all image permissions</p>
+				</div>
+				<a class="btn btn-primary btn-block" ng-click="editItem('album')">Update Album</a>
+			</form>
+		</div>
+	</div>
+</div>
+{{=form}}
+
+<div id="wrapper">
+	<div id="columns">
+		<div class="pin pointer" ng-repeat="image in album.media" ng-click="launchModal($index)">
+			<div ng-class="{'panel panel-default': image.viewLevel == '1', 'panel panel-success': image.viewLevel == '2', 'panel panel-info': image.viewLevel == '3', 'panel panel-warning': image.viewLevel == '4', 'panel panel-danger': image.viewLevel == '5'}">
+				<div class="panel-heading">
+					<strong class="panel-title">{!image.fileName!}</strong>
+				</div>
+				<div class="panel-body">
+					<img src="/init/api_shar/image/{!image.thumb_data!}">
+					<span>{!image.description!}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div ng-if="editImageModal" class="reg-modul">
+	<div class="container" style="margin-top:25px">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<div class="col-md-6">
+					<div class="img-holder"> 
+						<img src="/init/api_shar/image/{!mediaFormData.media_data!}" class="background_image" style="width:100%">
+						<div class="img-inner-left" ng-click="changeImage('back')">
+							<div class="previous-img">
+								<i class="fa fa-caret-left fa-3x pull-left"></i>
+							</div>
+						</div>
+						<div class="img-inner-right" ng-click="changeImage('next')">
+							<div class="next-img">
+								<i class="fa fa-caret-right fa-3x pull-right"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<form class="form-signin" role="form">
+						<a class="btn btn-default pull-right" ng-click="closeModal('edit')"><i class="fa fa-times-circle"></i></a>
+						<a class="btn btn-danger pull-left" ng-click="removeImage()">Delete Image <i class="fa fa-trash-o"></i></a>
+						<br><br>
+						<h4><a href="" class="btn btn-success" ng-click="bigImageToggle('show')">Show Full Screen</a>
+						<h4 style="color:#fff">Change File Name</h4>
+						<input type="text" class="form-control" value="mediaFormData.fileName" ng-model="mediaFormData.fileName" required autofocus>
+						<h4 style="color:#fff">Image Description</h4>
+						<input type="text" class="form-control" value="mediaFormData.description" ng-model="mediaFormData.description">
+						<label style="color:#fff">Who can view this image:
+							<select name="permissions" class="form-control" ng-class="{'alert-success': mediaFormData.viewLevel == '2', 'alert-info': mediaFormData.viewLevel == '3', 'alert-warning': mediaFormData.viewLevel == '4', 'alert-danger': mediaFormData.viewLevel == '5'}" ng-model="mediaFormData.viewLevel">
+								<option value="1">Private</option>
+								<option class="alert alert-success" value="2">Inner Circle</option>
+								<option class="alert alert-info" value="3">Good Friends</option>
+								<option class="alert alert-warning" value="4">Friends</option>
+								<option class="alert alert-danger" value="5">Public</option>
+							</select>
+						</label>
+						<div ng-if="mediaFormData.viewLevel < album.viewLevel">
+							<p ng-if="mediaFormData.viewLevel == '1'" style="color:#fff">Setting who can view your image to "Private" means no one will be able to see it except your own account moderators</p>
+							<p ng-if="mediaFormData.viewLevel == '5'"  class="alert alert-danger">Setting who can view your image to "Public" means everyone will be able to see the contents</p>
+						</div>
+						<h4 ng-if="mediaFormData.viewLevel > album.viewLevel"  class="alert alert-danger">Setting the media permissions higher than the album permission will revert to the album permissions. This is only useful if you want to use image as a profile picture or profile background.</h4>
+						<br>
+						<a class="btn btn-primary btn-block" ng-click="editItem('media')">Update Media</a>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div ng-if="deleteAlbumModal" class="reg-modul">
+	<div class="container" style="margin-top:25px">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2 text-center">
+				<button class="btn pull-right" ng-click="closeModal('delete')"><i class="fa fa-times-circle"></i> Cancel</button><br>
+				<h2 style="color:#fff">Are you sure?</h2>
+				<h3 style="color:#fff">"Delete Album" will remove this album and ALL it's contents from your account. There is no recycle bin or trash can, this action can not be undone</h3>
+				<p ng-if="album.viewLevel != '1'" style="color:#fff">Changing the album view permission to private is a way to keep the album for later while still preventing anyone from seeing it or its contents.</p>
+				<button class="btn btn-danger" ng-click="removeAlbum()">I'm Sure, delete album <i class="fa fa-trash-o"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
+<div ng-if="showBigImage" class="reg-modul">
+	<div class="big-image-wrapper">
+		<a class="btn btn-default pull-right" ng-click="bigImageToggle()" style="margin:25px"><i class="fa fa-times-circle"></i></a>
+		<div class="img-holder"> 
+			<img src="/init/api_shar/image/{!mediaFormData.media_data!}" class="background_image pull-left" style="max-height:100%">
+			<div class="img-inner-left" ng-click="changeImage('back')">
+				<div class="previous-img">
+					<i class="fa fa-caret-left fa-3x pull-left"></i>
+				</div>
+			</div>
+			<div class="img-inner-right" ng-click="changeImage('next')">
+				<div class="next-img">
+					<i class="fa fa-caret-right fa-3x pull-right"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

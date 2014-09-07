@@ -1,0 +1,343 @@
+{{extend 'layoutT.html'}}<!-- <div class="layout-app">  -->
+			<div class="innerLR">
+				<h2 class="margin-none">Message Center<i class="fa fa-fw fa-pencil text-muted"></i>
+				</h2>
+				<div class="separator-h"></div>
+				<div class="row">
+					<div class="col-md-3">
+						<!-- Widget -->
+						<div class="widget widget-body-white padding-none">
+							<div class="widget-head bg-inverse">
+								<h2 class="heading bg-inverse"><i class="fa fa-folder-open"></i> Folders</h2>
+							</div>
+							<div class="widget-body padding-none">
+								<div class="innerAll" ng-class="{'bg-primary': listPaneDisplay == 'inbox'}" ng-click="showListPane('inbox')">
+									<div class="strong">
+										<p>Inbox <i ng-if="listPaneDisplay != 'inbox'" class="fa fa-angle-right"></i><i ng-if="listPaneDisplay == 'inbox'" class="fa fa-angle-double-right"></i></p>
+									</div>
+								</div>
+								<div class="innerAll" ng-class="{'bg-primary': listPaneDisplay == 'sent'}" ng-click="showListPane('sent')">
+									<div class="strong">
+										<p>Sent <i ng-if="listPaneDisplay != 'sent'" class="fa fa-angle-right"></i><i ng-if="listPaneDisplay == 'sent'" class="fa fa-angle-double-right"></i></p>
+									</div>
+								</div>
+								<div class="innerAll" ng-class="{'bg-primary': listPaneDisplay == 'delete'}" ng-click="showListPane('delete')">
+									<div class="strong">
+										<p>Deleted <i ng-if="listPaneDisplay != 'delete'" class="fa fa-angle-right"></i><i ng-if="listPaneDisplay == 'delete'" class="fa fa-angle-double-right"></i></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- //Widget -->
+						<!-- Widget -->
+						<div class="widget widget-body-white padding-none">
+							<div class="widget-head bg-inverse">
+								<h3 class="heading bg-inverse"><i class="fa fa-folder-open"></i> To/From Friends</h3>
+							</div>
+							<div class="widget-body padding-none">
+								<!-- Inner Circle -->
+								<div ng-if="innerCircleList.length != 0 && dropDownDisplay != 'inner'" class="innerAll alert-success" ng-click="showDropDown('inner')">
+									<div class="strong">
+										<p>Inner Circle <i class="fa fa-angle-right"></i></p>
+									</div>
+								</div>
+								<div ng-if="innerCircleList.length != 0 && dropDownDisplay == 'inner'" class="innerAll alert-success">
+									<div class="strong" ng-click="showDropDown('inner')">
+										<p>Inner Circle <i class="fa fa-angle-double-down"></i></p>
+									</div>
+									<ul ng-if="dropDownDisplay == 'inner'" class="list-unstyled">
+										<li ng-repeat="friend in innerCircleList" ng-class="{'btn-success btn-stroke': hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-click="showListPane('friend', friend)">
+											<img src="/init/api_shar/image/{!friend.profileImg!}" style="width:25px">
+											<strong>{!friend.profileName!} - </strong>{!friend.tag!}
+										</li>
+									</ul>
+								</div>
+								<!-- End Inner Circle -->
+								<!-- Good Friends -->
+								<div ng-if="goodFriendsList.length != 0 && dropDownDisplay != 'good'" class="innerAll alert-info" ng-click="showDropDown('good')">
+									<div class="strong">
+										<p>Good Friends <i class="fa fa-angle-right"></i></p>
+									</div>
+								</div>
+								<div ng-if="goodFriendsList.length != 0 && dropDownDisplay == 'good'" class="innerAll alert-info">
+									<div class="strong" ng-click="showDropDown('good')">
+										<p>Good Friends <i class="fa fa-angle-double-down"></i></p>
+									</div>
+									<ul ng-if="dropDownDisplay == 'good'" class="list-unstyled">
+										<li ng-repeat="friend in goodFriendsList" ng-class="{'btn-info btn-stroke': hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-click="showListPane('friend', friend)">
+											<img src="/init/api_shar/image/{!friend.profileImg!}" style="width:25px">
+											<strong>{!friend.profileName!} - </strong>{!friend.tag!}
+										</li>
+									</ul>
+								</div>
+								<!-- End Good Friends -->
+								<!-- Friends -->
+								<div ng-if="friendList.length != 0 && dropDownDisplay != 'friend'" class="innerAll alert-warning" ng-click="showDropDown('friend')">
+									<div class="strong">
+										<p>Friends <i class="fa fa-angle-right"></i></p>
+									</div>
+								</div>
+								<div ng-if="friendList.length != 0 && dropDownDisplay == 'friend'" class="innerAll alert-warning">
+									<div class="strong" ng-click="showDropDown('friend')">
+										<p>Friends <i class="fa fa-angle-double-down"></i></p>
+									</div>
+									<ul ng-if="dropDownDisplay == 'friend'" class="list-unstyled">
+										<li ng-repeat="friend in friendList" ng-class="{'btn-warning btn-stroke': hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-click="showListPane('friend', friend)">
+											<img src="/init/api_shar/image/{!friend.profileImg!}" style="width:25px">
+											<strong>{!friend.profileName!} - </strong>{!friend.tag!}
+										</li>
+									</ul>
+								</div>
+								<!-- End Friends -->
+								<!-- Public -->
+								<div ng-if="publicList.length != 0 && dropDownDisplay != 'public'" class="innerAll alert-danger" ng-click="showDropDown('public')">
+									<div class="strong">
+										<p>People I follow <i class="fa fa-angle-right"></i></p>
+									</div>
+								</div>
+								<div ng-if="publicList.length != 0 && dropDownDisplay == 'public'" class="innerAll alert-danger">
+									<div class="strong" ng-click="showDropDown('public')">
+										<p>People I follow <i class="fa fa-angle-double-down"></i></p>
+									</div>
+									<ul ng-if="dropDownDisplay == 'public'" class="list-unstyled">
+										<li ng-repeat="friend in publicList" ng-class="{'btn-danger btn-stroke': hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-click="showListPane('friend', friend)">
+											<img src="/init/api_shar/image/{!friend.profileImg!}" style="width:25px">
+											<strong>{!friend.profileName!} - </strong>{!friend.tag!}
+										</li>
+									</ul>
+								</div>
+								<!-- End Public -->
+							</div>
+						</div>
+						<!-- //Widget -->
+						<!-- Widget -->
+						<div class="widget widget-body-white padding-none">
+							<div class="widget-head bg-inverse">
+								<h3 class="heading bg-inverse"><i class="fa fa-folder-open"></i> Groups</h3>
+							</div>
+							<div class="widget-body padding-none">
+								<div class="innerAll">
+									<div class="strong">
+										<p>No Groups Created!</p>
+									</div>
+								</div>
+								<div class="innerAll">
+									<div class="strong">
+										<p>Create New Group <i class="fa fa-angle-right"></i></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- //Widget -->
+					</div>
+					<!-- //End Col -->
+					<div class="col-md-3">
+								<div ng-if="listPaneDisplay == 'start'" class="bg-inverse text-center strong border-top innerAll half">Select a folder or friend
+								</div>
+								<div ng-if="listPaneDisplay == 'inbox'" class="bg-inverse text-center strong border-top innerAll half">Inbox <i class="fa fa-angle-double-down"></i>
+								</div>
+								<div ng-if="listPaneDisplay == 'sent'" class="bg-inverse text-center strong border-top innerAll half">Sent <i class="fa fa-angle-double-down"></i>
+								</div>
+								<div ng-if="listPaneDisplay == 'delete'" class="bg-inverse text-center strong border-top innerAll half">Delete <i class="fa fa-angle-double-down"></i>
+								</div>
+								<div ng-if="listPaneDisplay == 'friend'" class="bg-inverse text-center strong border-top innerAll half"><img src="/init/api_shar/image/{!currentAccount.profileImg!}" style="width:25px"> To/From {!currentAccount.profileName!} <span ng-if="currentAccount.messages">({!currentAccount.messages.length!}) </span><i class="fa fa-angle-double-down"></i>
+									<div ng-if="messageView != 'new'" class="pull-right">
+										<a href="" class="btn-default bg-white btn-sm" ng-click="composeNewMessage()">
+											<i class="fa fa-pencil"></i> send Message
+										</a>
+									</div>
+								</div>
+								<ul class="list-unstyled">
+									<li ng-if="!messageList && listPaneDisplay == 'inbox'" class="border-bottom ">
+										<div class="media innerAll">
+											<div class="media-body">
+												<div>
+													<span class="strong">No Message</span>
+												</div>
+												<div>Your "Inbox" folder is empty</div>
+											</div>
+										</div>
+									</li>
+									<li ng-if="!messageList && listPaneDisplay == 'sent'" class="border-bottom ">
+										<div class="media innerAll">
+											<div class="media-body">
+												<div>
+													<span class="strong">No Message</span>
+												</div>
+												<div>Your "Sent Messages" folder is empty</div>
+											</div>
+										</div>
+									</li>
+									<li ng-if="!messageList && listPaneDisplay == 'delete'" class="border-bottom ">
+										<div class="media innerAll">
+											<div class="media-body">
+												<div>
+													<span class="strong">No Message</span>
+												</div>
+												<div>Your "Deleted Messages" folder is empty</div>
+											</div>
+										</div>
+									</li>
+									<li ng-if="!messageList && listPaneDisplay == 'friend'" class="border-bottom ">
+										<div class="media innerAll">
+											<div class="media-body">
+												<div>
+													<span class="strong">No Message</span>
+												</div>
+												<div>You have no sent or received messages from this friend</div>
+											</div>
+										</div>
+									</li>
+									<li ng-if="messageList && listPaneDisplay != 'friend'" class="border-bottom" ng-class="{'btn-inverse': hover || currentMessage.key == message.key, 'btn-primary': !message.hasRead && currentMessage.key != message.key && message.receiver == 'self'}" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-repeat="message in messageList | orderBy : 'whenSent' : true" ng-click="showmessageView(message.key)">
+										<div ng-if="message.sender == 'self'" class="media innerAll">
+											<div class="media-body">
+												<div class="pull-left" style="width:50px">
+													<img src="/init/api_shar/image/{!message.receiver.profileImg!}" width="40" class="media-object">
+												</div>
+												<div>
+													<div>
+														<small class="text-italic label label-default">{!message.time!}</small><span class="strong pull-right">To {!message.receiver.profileName!}:</span>
+													</div>
+													<div ng-if="listPaneDisplay == 'delete'">
+														{!message.subject!}
+														<a ng-if="hover" href="" class="btn btn-danger pull-right" style="padding-top:0;padding-bottom:0" ng-click="deleteMessage(message.key, 'undo'); $event.stopPropagation();">undelete
+														</a>
+													</div>
+													<div ng-if="listPaneDisplay != 'delete'">
+														{!message.subject!}<a ng-if="hover" href="" class="btn btn-danger pull-right" style="padding-top:0;padding-bottom:0" ng-click="deleteMessage(message.key); $event.stopPropagation();"><i class="fa fa-trash-o"></i></a>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div ng-if="message.receiver == 'self'" class="media innerAll">
+											<div class="media-body">
+												<div class="pull-left" style="width:50px">
+													<img src="/init/api_shar/image/{!message.sender.profileImg!}" width="40" class="media-object">
+												</div>
+												<div>
+													<div>
+														<span class="strong">From {!message.sender.profileName!}:<small class="text-italic pull-right label label-default">{!message.time!}</small></span>
+													</div>
+													<div ng-if="listPaneDisplay == 'delete'">
+														{!message.subject!}
+														<a ng-if="hover" href="" class="btn btn-danger pull-right" style="padding-top:0;padding-bottom:0" ng-click="deleteMessage(message.key, 'undo'); $event.stopPropagation();">undelete
+														</a>
+													</div>
+													<div ng-if="listPaneDisplay != 'delete'">
+														{!message.subject!}<a ng-if="hover" href="" class="btn btn-danger pull-right" style="padding-top:0;padding-bottom:0" ng-click="deleteMessage(message.key); $event.stopPropagation();"><i class="fa fa-trash-o"></i></a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li ng-if="messageList && listPaneDisplay == 'friend'" class="border-bottom" ng-class="{'btn-inverse': hover || currentMessage.key == message.key, 'btn-primary': !message.hasRead && currentMessage.key != message.key && message.receiver == 'self'}" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-repeat="message in messageList | orderBy : 'whenSent' : true" ng-click="showmessageView(message.key)">
+										<div ng-if="message.sender == 'self'" class="media innerAll">
+											<div class="media-body">
+												<div>
+													<small class="text-italic label label-default">{!message.time!}</small><span class="strong pull-right">From You:</span>
+												</div>
+												<div>
+													{!message.subject!}
+													<a ng-if="hover" href="" class="btn btn-danger pull-right" style="padding-top:0;padding-bottom:0" ng-click="deleteMessage(message.key); $event.stopPropagation();">
+														<i class="fa fa-trash-o"></i>
+													</a>
+												</div>
+											</div>
+										</div>
+										<div ng-if="message.receiver == 'self'" class="media innerAll">
+											<div class="media-body">
+												<div>
+													<span class="strong">From {!message.sender.profileName!}:<small class="text-italic pull-right label label-default">{!message.time!}</small></span>
+												</div>
+												<div>
+													{!message.subject!}
+													<a ng-if="hover" href="" class="btn btn-danger pull-right" style="padding-top:0;padding-bottom:0" ng-click="deleteMessage(message.key); $event.stopPropagation();">
+														<i class="fa fa-trash-o"></i>
+													</a>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+					</div>
+					<!-- //End Col -->
+					<div class="col-md-6">
+				<!-- NEW MESSAGE -->
+						<div ng-if="messageView == 'new'" id="message-container">
+							<div class="bg-primary">
+								<div class="media">
+									<a href="/init/profile/about?account_key={!currentAccount.accountKey!}" class="pull-left">
+										<img src="/init/api_shar/image/{!currentAccount.profileImg!}" width="75" class="media-object">
+									</a>
+									<div class="media-body innerTB innerR">
+										<div class="innerT half pull-right">
+											<a href="" class=" btn btn-default bg-white btn-sm" ng-click="composeNewMessage('post')">
+												<i class="fa fa-pencil"></i> Send
+											</a>
+										</div>
+										<h4 href="" class="text-white pull-left innerAll strong display-block margin-none">New Message to "{!currentAccount.profileName!}"</h4>
+									</div>
+								</div>
+							</div>
+							<div class="bg-gray innerAll text-center margin-none"><i class="icon-time-clock"></i> {!currentTime | date:'EEEE MM/dd/yyyy @ h:mma'!}
+							</div>
+							<div class="widget border-top padding-none margin-none">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<input class="form-control" id="subjectMatter" type="text" placeholder="Subject..." ng-model="newMessageData.subject"  ng-keyup="$event.keyCode==13 ? postAlbumComment() : null">
+									</div>
+									<div class="panel-body">
+										<textarea class="text form-control input-xlarge" id="messageBody" name="description" rows="10" ng-model="newMessageData.body">What are you saying...</textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+				<!-- END NEW MESSAGE -->
+				<!-- READ MESSAGE -->
+						<div ng-if="messageView == 'read'" id="message-container">
+							<div class="bg-primary">
+								<div class="media">
+									<a ng-if="currentMessage.sender == 'self'" href="/init/profile/about?account_key={!currentMessage.receiver.accountKey!}" class="pull-left">
+										<img src="/init/api_shar/image/{!currentMessage.receiver.profileImg!}" width="75" class="media-object">
+									</a>
+									<a ng-if="currentMessage.receiver == 'self'" href="/init/profile/about?account_key={!currentMessage.sender.accountKey!}" class="pull-left">
+										<img src="/init/api_shar/image/{!currentMessage.sender.profileImg!}" width="75" class="media-object">
+									</a>
+									<div ng-if="currentMessage.sender == 'self'" class="media-body innerTB innerR">
+										<div class="innerT half pull-right">
+											<a href="#type" class=" btn btn-default bg-white btn-sm" data-toggle="collapse">
+												<i class="fa fa-pencil"></i> send another
+											</a>
+										</div>
+										<h4 href="" class="text-white pull-left innerAll strong display-block margin-none">To: {!currentMessage.receiver.profileName!}</h4>
+									</div>
+									<div ng-if="currentMessage.receiver == 'self'" class="media-body innerTB innerR">
+										<div class="innerT half pull-right">
+											<a href="#type" class=" btn btn-default bg-white btn-sm" data-toggle="collapse">
+												<i class="fa fa-pencil"></i> reply to {!currentMessage.sender.profileName!}
+											</a>
+										</div>
+										<h4 href="" class="text-white pull-left innerAll strong display-block margin-none">From: {!currentMessage.sender.profileName!}</h4>
+									</div>
+								</div>
+							</div>
+							<div class="bg-gray innerAll text-center margin-none"><i class="icon-time-clock"></i> {!currentMessage.date | date:'EEEE MM/dd/yyyy @ h:mma'!}
+							</div>
+							<div class="widget border-top padding-none margin-none">
+								<!--  Message -->
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h3 class="panel-title">Subject: {!currentMessage.subject!}</h3>
+									</div>
+									<div class="panel-body">
+										<p>{!currentMessage.mText!}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+				<!-- END READ MESSAGE -->
+					</div>
+					<!-- //End Col -->
+				</div>
+				<!-- End Row -->
+			</div>

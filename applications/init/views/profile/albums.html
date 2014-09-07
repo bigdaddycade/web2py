@@ -1,0 +1,217 @@
+{{extend 'layoutT.html'}}
+			<div class="innerAll">
+				<div class="row">
+					<div class="col-lg-9 col-md-8 col-sm-8">
+						<div class="timeline-cover">
+							{{include 'profile_banner.html'}}
+						</div>
+						{{if view['main']=='albums':}}
+							<div data-toggle="gridalicious" data-gridalicious-width="380" data-gridalicious-gutter="0">
+								<div class="innerAll inner-2x loading text-center text-medium">
+									<i class="fa fa-fw fa-spinner fa-spin"></i> Loading
+								</div>
+								<div class="loaded hide2">
+									{{if albums:}}
+										{{for thisAlbum in albums:}}
+											{{if thisAlbum['media']:}}
+												<div class="widget border-none bg-none widget-pinterest">
+													<div class="widget-body bg-none padding-none">
+														{{if request.vars.account_key:}}
+														<a href="{{=URL('profile', 'albums', vars=dict(account_key=request.vars.account_key, album_key=thisAlbum['albumKey']))}}" class="thumb">
+														{{else:}}
+														<a href="{{=URL('profile', 'albums', vars=dict(album_key=thisAlbum['albumKey']))}}" class="thumb">
+														{{pass}}
+															<img src="{{if thisAlbum['media'][0]['banner_data']:}}{{=URL('api_shar','image',args=thisAlbum['media'][0]['banner_data'])}}{{else:}}{{=URL('api_shar','image',args=thisAlbum['media'][0]['media_data'])}}{{pass}}" alt="photo" />
+															<div class="description bg-white">
+																<h5 class="text-uppercase">{{=thisAlbum['name']}}</h5>
+																<p>{{=thisAlbum['description']}}</p>
+															</div>
+														</a>
+													</div>
+												</div>
+											{{pass}}
+										{{pass}}
+									{{else:}}
+										<div class="widget border-none bg-none widget-pinterest">
+											<div class="widget-body bg-none padding-none">
+												<a href="" class="thumb">
+													<img src="{{=URL('static','images/no-image-banner.jpg')}}" alt="photo" />
+												</a>
+												<div class="description bg-white">
+													<h5 class="text-uppercase">No Album</h5>
+													<p>No albums are availible for you to view, either from lack of content, or insufficient permissions</p>
+												</div>
+											</div>
+										</div>
+									{{pass}}
+								</div>
+							</div>
+						{{elif view['main']=='images':}}
+							<div class="widget widget-gallery" data-toggle="collapse-widget">
+								<div class="widget-body">
+									<div class="tabsbar">
+										<ul>
+											<li class="glyphicons folder_open">
+												{{if request.vars.account_key:}}
+												<a href="{{=URL('profile', 'albums', vars=dict(account_key=request.vars.account_key))}}">
+												{{else:}}
+												<a href="{{=URL('profile', 'albums')}}">
+												{{pass}}
+													<i></i> Back to Albums
+												</a>
+											</li>
+											{{if view['home']:}}
+												<li class="glyphicons circle_plus tab-stacked"><a href="{{=URL('dashboard', 'media_edit', vars=dict(album_key=album['albumKey']))}}"><i></i> <span>Add Photos</span></a>
+												</li>
+												<li class="glyphicons folder_plus tab-stacked"><a href="{{=URL('dashboard', 'media_edit')}}"><i></i> <span>Create Album</span></a>
+												</li>
+											{{pass}}
+										</ul>
+									</div>
+									{!!}
+									<div class="gallery gallery-2">
+										<ul class="row">
+												<li class="col-md-3 hidden-phone" ng-repeat="media in album.media" ng-click="bigImageToggle('show', $index)">
+													<a class="thumb no-ajaxify"
+													href="">
+														<img src="/init/api_shar/image/{!media.thumb_data!}"
+														alt="photo" class="img-responsive"
+														/>
+													</a>
+												</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						{{pass}}
+
+
+
+
+
+					</div>
+					<div class="col-md-4 col-lg-3 col-sm-4">
+						<div class="widget">
+							<div class="widget-body text-center">
+								<a href="">
+									<img src="{{if profile['profileImg']:}}{{=URL('api_shar','image',args=profile['profileImg'])}}{{else:}}{{=URL('static','images/no-image.jpg')}}{{pass}}"
+									width="120" alt="" class="img-circle">
+								</a>
+								<h2 class="strong margin-none">{{=profile['name']}}</h2>
+								<div class="innerB">{{=profile['tagLine']}}</div>
+								<div class="btn-group-vertical btn-block">
+									{{if request.vars.account_key:}}
+										{{include 'friendmenu.html'}}
+									{{else:}}
+									<a href="{{=URL('dashboard', 'account')}}" class="btn btn-default"><i class="fa fa-cog pull-right"></i>Edit Profile Info</a>
+									{{pass}}
+								</div>
+							</div>
+						</div>
+						<!--<div class="widget text-center">
+							<div class="innerTB">
+								<div class="innerB"><i class=" icon-thumbs-up-fill fa fa-4x text-faded"></i>
+								</div>
+								<h2 class="strong margin-none">Get 50% OFF</h2>
+								<p class="lead">&dollar;30 / month</p>
+								<button class="btn btn-info">Register Today! <i class="fa fa-fw fa-play-circle"></i>
+								</button>
+							</div>-->
+							<!-- Ribbon -->
+							<!--<div class="ribbon-wrapper">
+								<div class="ribbon">50% Off</div>
+							</div>
+						</div>-->
+						{{if view['main']=='albums':}}
+							<div class="widget">
+								<h5 class="innerAll margin-none border-bottom bg-gray">Recent News</h5>
+								<div class="widget-body padding-none">
+									<div class="media border-bottom innerAll margin-none">
+										<img src="../static/gallery/wall_img10.JPG" class="pull-left media-object img-circle" style="width:50px"/>
+										<div class="media-body">
+											<a href="" class="pull-right text-muted innerT half">
+												<i class="fa fa-comments"></i> 4
+											</a>
+											<h5 class="margin-none"><a href="" class="text-inverse">Social Admin Released</a>
+											</h5>
+											<small>on February 2nd, 2014</small>
+										</div>
+									</div>
+									<div class="media border-bottom innerAll margin-none">
+										<img src="../static/gallery/wall_img11.JPG" class="pull-left media-object img-circle" style="width:50px"/>
+										<div class="media-body">
+											<a href="" class="pull-right text-muted innerT half">
+												<i class="fa fa-comments"></i> 4
+											</a>
+											<h5 class="margin-none"><a href="" class="text-inverse">Timeline Cover Page</a>
+											</h5>
+											<small>on February 2nd, 2014</small>
+										</div>
+									</div>
+									<div class="media border-bottom innerAll margin-none">
+										<img src="../static/gallery/wall_img12.JPG" class="pull-left media-object img-circle" style="width:50px"/>
+										<div class="media-body">
+											<a href="" class="pull-right text-muted innerT half">
+												<i class="fa fa-comments"></i> 4
+											</a>
+											<h5 class="margin-none"><a href="" class="text-inverse">1000+ Sales</a>
+											</h5>
+											<small>on February 2nd, 2014</small>
+										</div>
+									</div>
+									<div class="media border-bottom innerAll margin-none">
+										<img src="../static/gallery/wall_img13.JPG" class="pull-left media-object img-circle" style="width:50px"/>
+										<div class="media-body">
+											<a href="" class="pull-right text-muted innerT half">
+												<i class="fa fa-comments"></i> 4
+											</a>
+											<h5 class="margin-none"><a href="" class="text-inverse">On-Page Optimization</a>
+											</h5>
+											<small>on February 2nd, 2014</small>
+										</div>
+									</div>
+									<div class="media border-bottom innerAll margin-none">
+										<img src="../static/gallery/wall_img14.JPG" class="pull-left media-object img-circle" style="width:50px"/>
+										<div class="media-body">
+											<a href="" class="pull-right text-muted innerT half">
+												<i class="fa fa-comments"></i> 4
+											</a>
+											<h5 class="margin-none"><a href="" class="text-inverse">14th Admin Template</a>
+											</h5>
+											<small>on February 2nd, 2014</small>
+										</div>
+									</div>
+								</div>
+							</div>
+						{{elif view['main']=='images':}}
+							<div class="widget">
+								<h5 class="innerAll margin-none border-bottom bg-gray">Album Comments <span ng-if="albumComments">({!albumComments.length!})</span></h5>
+								<div ng-if="albumComments" class="widget-body padding-none">
+									<div class="media border-bottom innerAll margin-none" ng-repeat="comment in albumComments | limitTo: 5">
+										<a ng-if="comment.edit" href="" class="pull-right" ng-click="deleteComment(comment.id, $index, 'album')"><i class="fa fa-times-circle"></i></a>
+										<a href="/init/profile/about?account_key={!comment.posterKey!}" class="text-inverse">
+											<img src="/init/api_shar/image/{!comment.posterImg!}" class="pull-left media-object img-circle" style="width:50px;padding-right:5px"/>
+											<div class="media-body">
+												<h4 class="margin-none">{!comment.posterName!}:</h4>
+												
+												<span>{!comment.commentText!}</span><br>
+												<small>posted {!comment.created!}</small>
+											</div>
+										</a>
+									</div>
+								</div>
+								<div ng-if="!albumComments" class="widget-body padding-none">
+									<div class="media border-bottom innerAll margin-none">
+										<img src="{{if profile['profileImg']:}}{{=URL('api_shar','image',args=profile['profileImg'])}}{{else:}}{{=URL('static','images/no-image.jpg')}}{{pass}}" class="pull-left media-object img-circle" style="width:50px"/>
+										<div class="media-body">
+											<h5 class="margin-none"><strong>No one has commented on "{!album.name!}" yet</strong>
+											</h5>
+											<span>Be the first!!!</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						{{pass}}
+					</div>
+				</div>
+			</div>

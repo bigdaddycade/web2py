@@ -1,0 +1,97 @@
+{{include 'layouts/head.html'}}
+<body class=" menu-right-hidden">
+	<!-- Main Container Fluid -->
+	<div class="container-fluid menu-hidden ">
+		<!-- Main Sidebar Menu -->
+		{{include 'layouts/side_bar_menu.html'}}
+		<!-- // Main Sidebar Menu END 
+		"include 'layouts/side_bar_menu.html'" Needs the double camel case-->
+		<!-- Right Sidebar Menu -->
+		<!-- // Right Sidebar Menu END -->
+		<div id="content" ng-controller="sharoticaCtrl">
+			<!-- TOP Menu -->
+			{{include 'layouts/top_bar_menu.html'}}
+			<!-- // TOP Menu END -->
+			{{include}}
+
+{{if request.controller == 'profile' and request.function == 'albums':}}
+	{{include 'layouts/image_modal.html'}}
+	<!--  End Sharotica App -->
+		</div>
+{{else:}}
+		</div>
+		<div id="footer" class="hidden-print">
+			<!--  Copyright Line -->
+			<div class="copy">&copy; 2014 - <a href="http://www.sharotica.com">Sharotica</a> -
+				All Rights Reserved. 
+			</div>
+			<!--  End Copyright Line -->
+		</div>
+		<!-- // Footer END -->
+{{pass}}
+	</div>
+	<!-- // Main Container Fluid END -->
+	<!-- Global -->
+	<script data-id="App.Config">
+	var App = {};
+	var basePath = '',
+		commonPath = "{{=URL('static','assets/')}}",
+		rootPath = '../',
+		DEV = false,
+		componentsPath = "{{=URL('static','assets/components/')}}";
+	var primaryColor = '#f97083',
+		dangerColor = '#b55151',
+		successColor = '#609450',
+		infoColor = '#4a8bc2',
+		warningColor = '#ab7a4b',
+		inverseColor = '#45484d';
+	var themerPrimaryColor = primaryColor;
+	</script>
+	<script src="{{=URL('static','assets/components/library/bootstrap/js/bootstrap.min.js')}}"></script>
+	<script src="{{=URL('static','assets/components/plugins/nicescroll/jquery.nicescroll.min.js')}}"></script>
+	<script src="{{=URL('static','assets/components/plugins/breakpoints/breakpoints.js')}}"></script>
+	<script src="{{=URL('static','assets/components/plugins/preload/pace/pace.min.js')}}"></script>
+	<script src="{{=URL('static','assets/components/plugins/menus/sidr/jquery.sidr.js')}}"></script>
+	<script src="{{=URL('static','assets/components/common/gallery/gridalicious/assets/lib/jquery.gridalicious.min.js')}}"></script>
+	<script src="{{=URL('static','assets/components/common/gallery/gridalicious/assets/custom/gridalicious.init.js')}}"></script>
+	<script src="{{=URL('static','assets/components/common/gallery/prettyphoto/assets/lib/js/jquery.prettyPhoto.js')}}"></script>
+	<script src="{{=URL('static','assets/components/common/gallery/prettyphoto/assets/custom/prettyphoto.init.js')}}"></script>
+	<!--<script src="{{=URL('static','assets/components/modules/admin/twitter/assets/js/twitter.init.js')}}"></script>-->
+	<script src="{{=URL('static','assets/components/plugins/holder/holder.js')}}"></script>
+	<script src="{{=URL('static','assets/components/core/js/sidebar.main.init.js')}}"></script>
+	<script src="{{=URL('static','assets/components/core/js/sidebar.collapse.init.js')}}"></script>
+	<script src="{{=URL('static','assets/components/common/forms/elements/bootstrap-select/assets/lib/js/bootstrap-select.js')}}"></script>
+	<script src="{{=URL('static','assets/components/common/forms/elements/bootstrap-select/assets/custom/js/bootstrap-select.init.js')}}"></script>
+	<script src="{{=URL('static','assets/components/modules/admin/menus/menus.sidebar.chat.init.js')}}"></script>
+	<script src="{{=URL('static','assets/components/plugins/mixitup/jquery.mixitup.min.js')}}"></script>
+	<script src="{{=URL('static','assets/components/plugins/mixitup/mixitup.init.js')}}"></script>
+	<script src="{{=URL('static','assets/components/core/js/core.init.js')}}"></script>
+	<script type="text/javascript" src="{{=URL('static','lib/angular/angular.js')}}"></script>
+	<script type="text/javascript" src="{{=URL('static','ctrls/SharoticaApp.js')}}"></script>
+	<script>
+	sharoticaApp.run(
+		[        "$rootScope",
+		function ($rootScope) {
+			$rootScope.accountKey = "{{=currentKey}}";
+			$rootScope.basicData = "";
+			{{if request.vars.message_id:}}
+			$rootScope.messageKey = "{{=request.vars.message_id}}";
+			{{else:}}
+			$rootScope.messageKey = false;
+			{{pass}}
+	}]);
+	</script>
+
+
+	<script>
+{{include 'layouts/controller.js'}}
+	</script>
+{{if request.controller == 'profile' and request.function == 'albums':}}
+	<style>
+{{include 'layouts/modal.css'}}
+	</style>
+{{pass}}
+</body>
+</html>
+
+

@@ -1,0 +1,29 @@
+
+									<a ng-if="!showFriendUpdate && !isFriend" href="" class="btn btn-default" ng-click="makeNewFriend()"><i class="fa fa-2x icon-group pull-right"></i>Add as Friend</a>
+									<a ng-if="!showFriendUpdate && isFriend == 2" href="" class="btn btn-default btn-success" ng-click="showUpdateMenu()"><i class="fa fa-2x icon-group pull-right"></i>In my Inner circle<small> - edit</small></a>
+									<a ng-if="!showFriendUpdate && isFriend == 3" href="" class="btn btn-default btn-info" ng-click="showUpdateMenu()"><i class="fa fa-2x icon-group pull-right"></i>a Good Friend<small> - edit</small></a>
+									<a ng-if="!showFriendUpdate && isFriend == 4" href="" class="btn btn-default btn-warning" ng-click="showUpdateMenu()"><i class="fa fa-2x icon-group pull-right"></i>a Friend<small> - edit</small></a>
+									<a ng-if="!showFriendUpdate && isFriend == 5" href="" class="btn btn-default btn-danger" ng-click="showUpdateMenu()"><i class="fa fa-2x icon-group pull-right"></i>public but on my list<small> - edit</small></a>
+									<a ng-if="!showFriendUpdate && isFriend == 6" href="" class="btn btn-default btn-inverse" ng-click="showUpdateMenu('unblock')"><i class="fa fa-minus-circle"></i> Blocked Profile</a>
+									<label ng-if="showFriendUpdate == 'add' && isFriend">Change {{=profile['name']}} to:<i class="fa fa-times-circle pull-right" ng-click="showUpdateMenu('off')"></i>
+										<select ng-model="account.friendLevel" class="form-control" ng-class="{'alert-success': account.friendLevel == '2', 'alert-info': account.friendLevel == '3', 'alert-warning': account.friendLevel == '4', 'alert-danger': account.friendLevel == '5'}" ng-change="makeNewFriend()">
+											<option class="alert-success" value="2">my Inner Circle</option>
+											<option class="alert-info" value="3">a Good Friend</option>
+											<option class="alert-warning" value="4">a Friend</option>
+											<option class="alert-danger" value="5">public but on my list</option>
+										</select>
+									</label>
+									<a ng-if="!showFriendUpdate && !isFriend" href="" class="btn btn-default" ng-click="showUpdateMenu('block')"><i class="fa icon-delete-symbol pull-right"></i>Block User!</a>
+									<label ng-if="showFriendUpdate == 'block' && !isFriend" class="label label-inverse">Block {{=profile['name']}} From seeing you:<i class="fa fa-times-circle pull-right" ng-click="showUpdateMenu('off')"></i><br><strong>Are You Sure</strong><br>
+										<input type="checkbox" ng-model="account.friendLevel" ng-true-value="6" ng-false-value="{{=basicData['friend']}}" ng-change="makeNewFriend('blocked')">YES!
+									</label>
+
+									<a ng-if="!showFriendUpdate && isFriend && isFriend != 6" href="" class="btn btn-default" ng-click="showUpdateMenu('unfriend')"><i class="fa icon-delete-symbol pull-right"></i>Remove Friendship link</a>
+									<label ng-if="showFriendUpdate == 'unfriend'" class="label label-inverse">unfriend {{=profile['name']}}?<i class="fa fa-times-circle pull-right" ng-click="showUpdateMenu('off')"></i><br><strong>Are You Sure</strong><br>
+										<input type="checkbox" ng-model="account.friendLevel" ng-true-value="9" ng-false-value="{{=basicData['friend']}}" ng-change="makeNewFriend()">YES!
+									</label>
+
+									<a ng-if="!showFriendUpdate && isFriend == 6" href="" class="btn btn-inverse" ng-click="showUpdateMenu('unblock')"></i>- Unblock -</a>
+									<label ng-if="showFriendUpdate == 'unblock'" class="label label-inverse">unblock {{=profile['name']}}?<i class="fa fa-times-circle pull-right" ng-click="showUpdateMenu('off')"></i><br><strong>Are You Sure</strong><br>
+										<input type="checkbox" ng-model="account.friendLevel" ng-true-value="9" ng-false-value="{{=basicData['friend']}}" ng-change="makeNewFriend('unblock')">YES!
+									</label>

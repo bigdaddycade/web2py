@@ -1,0 +1,49 @@
+{{extend 'layoutT.html'}}<!-- <div class="layout-app">  -->
+			<div class="innerLR">
+				<h2 class="margin-none">
+					Latest and Greatest!
+				</h2>
+				<div class="separator-h"></div>
+				<div class="row">
+					<div class="col-md-6 col-sm-6">
+						<!-- Widget -->
+						<div class="widget widget-body-white ">
+							<div class="widget-head">
+								<h4 class=" heading glyphicons list"><i></i>Latest Media Additions</h4>
+							</div>
+							<div class="widget-body padding-none">
+									{{for theNew in newest:}}
+								<div class="col-md-2 col-sm-2">
+									<a href="{{=URL('profile', 'albums', vars=dict(account_key=theNew['account'], album_key=theNew['album']))}}">
+										<img src="{{=URL('api_shar','image',args=theNew['thumb'])}}" style="width:100%">
+									</a>
+								</div>
+									{{pass}}
+							</div>
+						</div>
+						<!-- //Widget -->
+					</div>
+					<!-- //End Col -->
+					<div class="col-md-6 col-sm-6">
+						<!-- Widget -->
+						<div class="widget widget-body-white padding-none">
+							<div class="widget-head">
+								<h4 class="heading "><i class="fa fa-fw fa-user"></i> Most Popular Media</h4>
+							</div>
+							<div class="widget-body padding-none">
+									{{for great in greatest:}}
+								<div class="col-md-2 col-sm-2">
+									<a href="{{=URL('profile', 'albums', vars=dict(account_key=great['account'], album_key=great['album']))}}">
+										<img src="{{=URL('api_shar','image',args=great['thumb'])}}" style="width:100%">
+										<P><i class="fa fa-thumbs-up"></i> <strong>{{=great['likes']}}</strong></p>
+									</a>
+								</div>
+									{{pass}}
+							</div>
+						</div>
+						<!-- //Widget -->
+					</div>
+					<!-- //End Col -->
+				</div>
+				<!-- End Row -->
+			</div>

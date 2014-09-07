@@ -1,0 +1,22 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
+{{extend 'photoWallLayout.html'}}
+
+{{if 'message' in globals():}}
+<h3>{{=message}}</h3>
+
+<p>{{=T('Just because you are having fun does not make you a crude person. So why do most of the so called "Adult Social Networking" sites either throw crude ads at you, or charge you to show off how much fun you have had.')}}</p>
+  <h4>{{=T('We are something different!')}}</h4>
+<ol>
+  <li>{{=T('No crude ads or obscenties.')}}</li>
+  <li>{{=T('We only moderate the public pages, so you can be as graphic as you want with your friends.')}}</li>
+  <li>{{=T('We DO moderate the public pages, so you dont end up having something you dont want to see thrown in your face.')}}</li>
+  <li>{{=T('6 levels of privacy for EVERY photo, blog, comment, or section of your profile.')}}</li>
+</ol>
+<h4>{{=T('What are you waiting for?')}}</h4>
+<a href="{{=URL('default', 'user', args='register')}}" class="btn">Register Now</a>
+<!--<a href="{{=URL('default', 'user', args='login', vars=dict(_next=URL(args=request.args, vars=request.vars)))}}" class="btn">Register Now</a>-->
+{{elif 'content' in globals():}}
+{{=content}}
+{{else:}}
+{{=BEAUTIFY(response._vars)}}
+{{pass}}

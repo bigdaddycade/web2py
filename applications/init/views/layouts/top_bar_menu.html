@@ -1,0 +1,56 @@
+<div class="navbar hidden-print navbar-default box main" role="navigation" ng-controller="topBarMenuCtrl">
+	<!--<div class="user-action user-action-btn-navbar pull-right border-left">
+		<a href="#menu-right" class="btn btn-sm btn-navbar btn-open-right"><i class="fa fa-comments fa-2x"></i></a>
+	</div>-->
+	<div class="user-action user-action-btn-navbar pull-left">
+		<a href="#menu" class="btn btn-sm btn-navbar btn-open-left"><i class="fa fa-bars fa-2x"></i></a>
+	</div>
+	<ul class="notifications pull-left hidden-xs">
+		<li class="dropdown notif">
+			<a ng-if="unReadMessages" href="" class="dropdown-toggle" data-toggle="dropdown"><i class="notif-block icon-envelope-1"></i><span class="fa fa-star"></span></a>
+			<ul class="dropdown-menu chat media-list">
+				<li class="media" ng-repeat="message in unReadMessages | orderBy : 'whenSent' : true" ng-click="getMessage(message.key)">
+					<a class="pull-left" href="">
+						<img class="media-object thumb" ng-src="/init/api_shar/image/{!message.sender.profileImg!}"
+						alt="50x50" width="50" />
+					</a>
+					<div class="media-body">
+						<span class="label label-default pull-right">{!message.time!}</span>
+						<h5 class="media-heading">{!message.sender.profileName!}</h5>
+						<p class="margin-none">{!message.subject!}.</p>
+					</div>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	<div class="user-action pull-left menu-right-hidden-xs menu-left-hidden-xs border-left">
+		<div class="dropdown username pull-left">
+			<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+				<span class="media margin-none">
+					<span class="pull-left">
+						<img ng-src="/init/api_shar/image/{!basicData.profileImg!}" alt="user"
+						class="img-circle" ng-if="basicData.profileImg">
+						<img src="{{=URL('static','images/no-image.jpg')}}" alt="user"
+						class="img-circle" ng-if="!basicData.profileImg">
+					</span>
+					<span class="media-body">{!basicData.name!}
+						<span class="caret"></span>
+					</span>
+				</span>
+			</a>
+			<ul class="dropdown-menu">
+				<li><a href="{{=URL('profile', 'about')}}">Profile</a>
+				</li>
+				<li><a href="{{=URL('messages', 'index')}}">Messages</a>
+				</li>
+				<li><a href="{{=URL('default', 'user', args='logout')}}">Logout</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="input-group hidden-xs pull-left">
+		<span class="input-group-addon"><i class="icon-search"></i>
+		</span>
+		<input type="text" class="form-control" placeholder="Search for a Profile" />
+	</div>
+</div>

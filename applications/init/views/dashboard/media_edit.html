@@ -1,0 +1,330 @@
+{{extend 'layoutT.html'}}<!-- <div class="layout-app">  -->
+			<div class="innerLR">
+				<h2 class="margin-none">Create / Edit Media<i class="fa fa-fw fa-pencil text-muted"></i>
+				</h2>
+				<div class="separator-h"></div>
+				<div class="row">
+					<div class="col-md-4">
+						<!-- Widget -->
+						<div class="widget widget-body-white">
+							<div class="media widget-body innerAll">
+								<a href="" class="pull-left">
+									<img src="{{if basicData['profileImg']:}}{{=URL('api_shar','image',args=basicData['profileImg'])}}{{else:}}{{=URL('static','images/no-image.jpg')}}{{pass}}" width="60"
+									alt="">
+								</a>
+								<div class="media-body innerL half">
+									<h4 class="margin-none"><a href="" class="text-primary">{{=basicData['profileName']}}</a>
+									</h4>
+									<p class="strong">{{=basicData['profileTag']}}</p>
+									<div class="bg-gray innerAll ">
+										<h5 class="innerB half border-bottom text-muted margin-none">Logged in as {{=basicData['name']}}</h5>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- //Widget -->
+						{{if request.vars.flag:}}
+						<!-- Widget -->
+						<div class="widget widget-body-white">
+								{{if request.vars.flag == 'created':}}
+							<div class="widget-head alert alert-success fadeMe">
+								<h4 class="heading">Album Created!</h4>
+							</div>
+								{{elif request.vars.flag == 'updated':}}
+							<div class="widget-head alert alert-success fadeMe">
+								<h4 class="heading">Album Updated!</h4>
+							</div>
+								{{elif request.vars.flag == 'media':}}
+							<div class="widget-head alert alert-success fadeMe">
+								<h4 class="heading">Media Added!</h4>
+							</div>
+								{{elif request.vars.flag == 'deleted':}}
+							<div class="widget-head alert alert-danger fadeMe">
+								<h4 class="heading">Album Deleted!</h4>
+							</div>
+								{{elif request.vars.flag == 'wrong':}}
+							<div class="widget-head alert alert-danger fadeMe">
+								<h4 class="heading">hmm...Something went wrong!</h4>
+							</div>
+								{{elif request.vars.flag == 'mismatch':}}
+							<div class="widget-head alert alert-danger fadeMe">
+								<h4 class="heading">Profile ID and Album ID dont match</h4>
+							</div>
+								{{pass}}
+							<style>
+								.fadeMe {
+									margin-bottom:3px;
+									-webkit-animation: fadein 2s; /* Safari and Chrome */
+									   -moz-animation: fadein 2s; /* Firefox */
+										-ms-animation: fadein 2s; /* Internet Explorer */
+										 -o-animation: fadein 2s; /* Opera */
+											animation: fadein 2s;
+									-webkit-animation-delay:5s; /* Safari and Chrome */
+									   -moz-animation-delay:5s;
+										-ms-animation-delay:5s;
+										 -o-animation-delay:5s;
+											animation-delay:5s;
+									-webkit-animation-fill-mode:forwards; /* Safari and Chrome */
+									   -moz-animation-fill-mode:forwards;
+										-ms-animation-fill-mode:forwards;
+										 -o-animation-fill-mode:forwards;
+											animation-fill-mode:forwards;
+								}
+
+								@keyframes fadein {
+									from { opacity: 1; }
+									to   { opacity: 0; }
+								}
+
+								/* Firefox */
+								@-moz-keyframes fadein {
+									from { opacity: 1; }
+									to   { opacity: 0; }
+								}
+
+								/* Safari and Chrome */
+								@-webkit-keyframes fadein {
+									from { opacity: 1; }
+									to   { opacity: 0; }
+								}
+
+								/* Internet Explorer */
+								@-ms-keyframes fadein {
+									from { opacity: 1; }
+									to   { opacity: 0; }
+								}​
+
+								/* Opera */
+								@-o-keyframes fadein {
+									from { opacity: 1; }
+									to   { opacity: 0; }
+								}​
+							</style>
+						</div>
+						<!-- //Widget -->
+						{{else:}}
+						<!-- Widget -->
+						<div class="widget widget-body-white">
+							<div class="widget-head">
+								<!--holer for future stuff-->
+							</div>
+						</div>
+						<!-- //Widget -->
+						{{pass}}
+						<!-- Widget -->
+						<div class="widget widget-body-white ">
+							<div class="widget-head">
+								<h4 class=" heading glyphicons list"><i></i>Albums</h4>
+							</div>
+							<div class="menu list-unstyled">
+								{{if len(albums['public']) >= 1:}}
+									<li class="hasSubmenu panel-heading alert-danger">
+										<a href="#public-album-list" data-toggle="collapse" class="glyphicons show_big_thumbnails"><i></i><h4>My Public Albums - </h4></a>
+										<ul id="public-album-list" class="collapse">
+											{{for album in albums['public']:}}
+												<li><a href="{{=URL('dashboard', 'media_edit', vars=dict(album_key=album['albumKey']))}}"><span><strong>{{=album['name']}}</strong> - {{=album['description']}}</span></a>
+												</li>
+											{{pass}}
+										</ul>
+									</li>
+								{{pass}}
+								{{if len(albums['friends']) >= 1:}}
+									<li class="hasSubmenu panel-heading alert-warning">
+										<a href="#friends-album-list" data-toggle="collapse" class="glyphicons show_big_thumbnails"><i></i><h4>My albums for Friends - </h4></a>
+										<ul id="friends-album-list" class="collapse">
+											{{for album in albums['friends']:}}
+												<li><a href="{{=URL('dashboard', 'media_edit', vars=dict(album_key=album['albumKey']))}}"><span><strong>{{=album['name']}}</strong> - {{=album['description']}}</span></a>
+												</li>
+											{{pass}}
+										</ul>
+									</li>
+								{{pass}}
+								{{if len(albums['goodFriends']) >= 1:}}
+									<li class="hasSubmenu panel-heading alert-info">
+										<a href="#goodFriends-album-list" data-toggle="collapse" class="glyphicons show_big_thumbnails"><i></i><h4>My albums for Good Friends - </h4></a>
+										<ul id="goodFriends-album-list" class="collapse">
+											{{for album in albums['goodFriends']:}}
+												<li><a href="{{=URL('dashboard', 'media_edit', vars=dict(album_key=album['albumKey']))}}"><span><strong>{{=album['name']}}</strong> - {{=album['description']}}</span></a>
+												</li>
+											{{pass}}
+										</ul>
+									</li>
+								{{pass}}
+								{{if len(albums['innerCircle']) >= 1:}}
+									<li class="hasSubmenu panel-heading alert-success">
+										<a href="#innerCircle-album-list" data-toggle="collapse" class="glyphicons show_big_thumbnails"><i></i><h4>My albums for my Inner Circle - </h4></a>
+										<ul id="innerCircle-album-list" class="collapse">
+											{{for album in albums['innerCircle']:}}
+												<li><a href="{{=URL('dashboard', 'media_edit', vars=dict(album_key=album['albumKey']))}}"><span><strong>{{=album['name']}}</strong> - {{=album['description']}}</span></a>
+												</li>
+											{{pass}}
+										</ul>
+									</li>
+								{{pass}}
+								{{if len(albums['private']) >= 1:}}
+									<li class="hasSubmenu panel-heading alert-primary">
+										<a href="#private-album-list" data-toggle="collapse" class="glyphicons show_big_thumbnails"><i></i><h4>My Private Albums - </h4></a>
+										<ul id="private-album-list" class="collapse">
+											{{for album in albums['private']:}}
+												<li><a href="{{=URL('dashboard', 'media_edit', vars=dict(album_key=album['albumKey']))}}"><span><strong>{{=album['name']}}</strong> - {{=album['description']}}</span></a>
+												</li>
+											{{pass}}
+										</ul>
+									</li>
+								{{pass}}
+								{{if len(albums['blocked']) >= 1:}}
+									<li class="hasSubmenu panel-heading alert-default">
+										<a href="#blocked-album-list" data-toggle="collapse" class="glyphicons show_big_thumbnails"><i></i><h4>My Blocked Albums - </h4></a>
+										<ul id="blocked-album-list" class="collapse">
+											{{for album in albums['blocked']:}}
+												<li><a href="{{=URL('dashboard', 'media_edit', vars=dict(album_key=album['albumKey']))}}"><span><strong>{{=album['name']}}</strong> - {{=album['description']}}</span></a>
+												</li>
+											{{pass}}
+										</ul>
+									</li>
+								{{pass}}
+								{{if view=='images':}}
+									<li class="hasSubmenu panel-heading alert-default">
+										<a href="{{=URL('dashboard', 'media_edit')}}" class="btn btn-primary">Create New Album</a>
+									</li>
+								{{pass}}
+							</div>
+						</div>
+						<!-- //Widget -->
+						<!-- Widget -->
+						{{if view=='images':}}
+						<div class="widget widget-body-white padding-none">
+							<div class="widget-head">
+								<h4 class="heading "></i> Delete Album</h4>
+							</div>
+							<div class="widget-body padding-none">
+								<div class="bg-gray innerAll">
+									<span class="fa-stack fa-lg pull-right">
+										<i class="fa fa-4x fa-trash-o fa-stack-1x text-primary"></i>
+										<i class="fa fa-2x fa-ban fa-stack-1x text-danger pull-right"></i>
+									</span>
+									<div class="strong">
+										<p>There is no recycle, there is no undo, if you delete this album, all media will be removed along with it</p>
+										<a href="{{=URL('dashboard', 'media_edit', vars=dict(album_key=thisalbum['albumKey'], flag='deleteMe'))}}" class="btn btn-primary">Delete album "{{=thisalbum['name']}}"</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						{{pass}}
+						<!-- //Widget -->
+					</div>
+					<!-- //End Col -->
+					<div class="col-md-4">
+						{{if view=='albums':}}
+						<!-- Widget -->
+						<div class="widget widget-body-white padding-none">
+							<div class="widget-head">
+								<h4 class="heading "><i class="fa fa-fw fa-user"></i> Create New Album</h4>
+							</div>
+							<div class="widget-body padding-none">
+								<div class="bg-gray innerAll">
+									<i class="fa fa-5x icon-paper-documents-image text-primary pull-right"></i>
+									<div class="strong">
+										{{=form}}
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Widget -->
+						{{elif view=='images':}}
+						<div class="widget widget-body-white padding-none">
+							<div class="widget-head">
+								<h4 class="heading "><i class="fa fa-fw fa-user"></i> Edit Album</h4>
+							</div>
+							<div class="widget-body padding-none">
+								<div class="bg-gray innerAll">
+									<i class="fa fa-5x icon-paper-documents-image text-primary pull-right"></i>
+									<div>
+										<p><strong>Note: </strong>Changing the view level of an album resets ALL the media in that album to the new level. If you only want to hide a few select images in this album, "Edit / Delete Media" below has options to change the view of a single image</p><br>
+										{{=form}}
+									</div>
+								</div>
+							</div>
+						</div>
+						{{pass}}
+						<!-- //Widget -->
+						<!-- Widget -->
+						{{if view=='images':}}
+						<div class="widget widget-body-white padding-none">
+							<div class="widget-head">
+								<h4 class="heading "></i> Edit / Delete Media</h4>
+							</div>
+							<div class="widget-body padding-none">
+								<div class="bg-gray innerAll">
+									<i class="fa fa-4x fa-picture-o text-primary pull-right"></i>
+									<div class="strong">
+										<p>Advanced Media settings. Edit or remove media, change file name, add caption</p>
+										<a href="{{=URL('dashboard', 'media_advanced', vars=dict(album_key=thisalbum['albumKey']))}}" class="btn btn-primary">Edit / Delete Media</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						{{pass}}
+						<!-- //Widget -->
+					</div>
+					<!-- //End Col -->
+					<div class="col-md-4">
+						{{if view=='albums':}}
+							<!-- Widget -->
+							<div class="widget">
+								<div class="innerAll border-bottom">
+									<div class="media innerAll half">
+										<div class="media-body ">
+											<h5 class="margin-none strong">Add Media to Album</h5>
+											<div class="">
+												You must create or select an album to add media to:
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- //Widget -->
+						{{elif view=='images':}}
+							<!-- Widget -->
+							<div class="widget">
+								<div class="innerAll border-bottom">
+									<div class="media innerAll half">
+										<div class="media-body ">
+											<h5 class="margin-none strong">Add Media to "{{=thisalbum['name']}}"</h5>
+											<div class="">
+												<span>You can select multiple files for upload</span>
+												{{=form1}}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- //Widget -->
+						{{pass}}
+						<!-- Widget	 -->
+						{{if view=='images':}}
+							{{if thisalbum['media']:}}
+						<div class="widget widget-body-white padding-none ">
+							<div class="widget-head height-auto">
+								<div class="media innerAll">
+									<div class="media-body">
+										<h4>"{{=thisalbum['name']}}"" Media</h4>
+									</div>
+									<div style="height:350px;overflow:auto">
+									{{for media in thisalbum['media']:}}
+										<div class="col-sm-3 col-xs-3">
+											<img src="{{=URL('api_shar','image',args=media['thumb_data'])}}" style="width:75px;padding-bottom:5px;padding-right:5px">
+										</div>
+									{{pass}}
+									</div>
+								</div>
+							</div>
+						</div>
+							{{pass}}
+						{{pass}}
+						<!-- //Widget -->
+					</div>
+					<!-- //End Col -->
+				</div>
+				<!-- End Row -->
+			</div>

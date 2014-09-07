@@ -1,0 +1,119 @@
+{{extend 'layoutT.html'}}
+			<div class="innerAll">
+				<div class="row">
+					<div class="col-lg-9 col-md-8">
+						{{if view['main']=='images':}}
+							<div class="widget widget-gallery" data-toggle="collapse-widget">
+								<div>
+									<h3 class="heading"><strong>Edit Media: </strong><small>Select image to edit name, caption, and "view settings" or just delete</small></h3>
+									<p style="padding-left:15px">Images with borders have different "view" permissions from the album itself.<br>Image view settings will not be less than the album (I.E. you can't have see public images in a private album).</p>
+								</div>
+								<div class="widget-body">
+								<div class="tabsbar">
+									<ul>
+										<li class="glyphicons folder_open"><a href="{{=URL('dashboard', 'media_edit', vars=dict(album_key=request.vars.album_key))}}"><i></i> Back to Create / Edit</a>
+										</li>
+									</ul>
+								</div>
+									<div class="gallery gallery-2">
+										<ul class="row">
+											<li class="col-md-3 hidden-phone" ng-repeat="media in album.media" ng-click="editImage($index)">
+												<a id="{!$index!}"></a>
+												<a class="thumb no-ajaxify" href="#edit">
+													<img ng-if="album.viewLevel == media.viewLevel" src="/init/api_shar/image/{!media.thumb_data!}"
+													alt="photo" class="img-responsive"/>
+													<img ng-if="album.viewLevel != media.viewLevel" src="/init/api_shar/image/{!media.thumb_data!}"
+													alt="photo" class="img-responsive" ng-class="{'alert-success': media.viewLevel == '2', 'alert-info': media.viewLevel == '3', 'alert-warning': media.viewLevel == '4', 'alert-danger': media.viewLevel == '5'}" style="border:5px solid"
+													/>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						{{pass}}
+
+
+
+
+
+					</div>
+					<div class="col-md-4 col-lg-3">
+						<div class="widget">
+							<div class="widget-body text-center">
+								<a href="">
+									<img src="{{if basicData['profileImg']:}}{{=URL('api_shar','image',args=basicData['profileImg'])}}{{else:}}{{=URL('static','images/no-image.jpg')}}{{pass}}"
+									width="120" alt="" class="img-circle">
+								</a>
+								<h2 class="strong margin-none">{{=basicData['profileName']}}</h2>
+								<div class="innerB">{{=basicData['profileTag']}}</div>
+							</div>
+						</div>
+
+						<div class="widget" ng-if="mediaFormData">
+							<a id="edit"></a>
+							<h5 class="innerAll margin-none border-bottom bg-gray">Edit Media</h5>
+							<div  ng-if="album.viewLevel != 6" class="widget-body padding-none">
+								<div class="media border-bottom innerAll margin-none">
+									<img src="/init/api_shar/image/{!mediaFormData.media_data!}" class="media-object" style="max-width:200;max-height:150px"/>
+								</div>
+								<div class="media border-bottom innerAll margin-none">
+									<div class="media-body">
+										<a href="" class="btn btn-danger" ng-click="removeMedia()">Remove "{!mediaFormData.fileName!}"</a>
+										<p>There is no undo for this</p>
+									</div>
+								</div>
+								<div class="media border-bottom innerAll margin-none">
+									<div class="media-body">
+										<h5 class="margin-none">Change File Name to:</h5>
+										<input type="text" class="form-control" ng-model="mediaFormData.fileName" ng-keyup="$event.keyCode==13 ? editMedia() : null">
+									</div>
+								</div>
+								<div class="media border-bottom innerAll margin-none">
+									<div class="media-body">
+										<h5 class="margin-none">Caption:</h5>
+										<input type="text" class="form-control" ng-model="mediaFormData.description" ng-keyup="$event.keyCode==13 ? editMedia() : null">
+									</div>
+								</div>
+								<div class="media border-bottom innerAll margin-none">
+									<div class="media-body">
+										<a href="" class="btn btn-block btn-default" ng-click="editMedia()">update</a>
+									</div>
+								</div>
+								<div ng-if="album.viewLevel != 1" class="media border-bottom innerAll margin-none">
+									<div class="media-body">
+										<label>Who can view this image:
+											<select name="permissions" class="form-control" ng-class="{'alert-success': mediaFormData.viewLevel == '2', 'alert-info': mediaFormData.viewLevel == '3', 'alert-warning': mediaFormData.viewLevel == '4', 'alert-danger': mediaFormData.viewLevel == '5'}" ng-model="mediaFormData.viewLevel" ng-change="editMedia()">
+												<option value="1">Private</option>
+												<option ng-if="album.viewLevel >= 2" class="alert-success" value="2">Inner Circle</option>
+												<option ng-if="album.viewLevel >= 3" class="alert-info" value="3">Good Friends</option>
+												<option ng-if="album.viewLevel >= 4" class="alert-warning" value="4">Friends</option>
+												<option ng-if="album.viewLevel >= 5" class="alert-danger" value="5">Public</option>
+											</select>
+										</label>
+									</div>
+								</div>
+								<div ng-if="album.viewLevel == 1" class="media border-bottom innerAll margin-none">
+									<div class="media-body">
+										<p>The album view settings are set to "Private". This means that all images in this album are "private" and the view settings can not be adjusted.
+									</div>
+								</div>
+								<div class="media border-bottom innerAll margin-none">
+									<img src="../assets/images/people/35/22.jpg" class="pull-left media-object" />
+									<div class="media-body">
+										<a href="" class="pull-right text-muted innerT half">
+											<i class="fa fa-comments"></i> 4
+										</a>
+										<h5 class="margin-none"><a href="" class="text-inverse">14th Admin Template</a>
+										</h5>
+										<small>on February 2nd, 2014</small>
+									</div>
+								</div>
+							</div>
+							<div  ng-if="album.viewLevel == 6" class="widget-body padding-none">
+								<h2>We do not allow media setting changes on albums set to "Blocked".<h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>

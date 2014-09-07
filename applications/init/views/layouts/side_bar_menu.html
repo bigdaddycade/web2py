@@ -1,0 +1,114 @@
+<div id="menu" class="hidden-print hidden-xs sidebar-default sidebar-brand-primary" ng-controller="sideBarMenuCtrl">
+	<div id="sidebar-social-wrapper">
+		<div id="brandWrapper">
+			<a href="/">
+				{{=response.logo or ''}}
+			</a>
+		</div>
+		<ul class="menu list-unstyled" id="navigation_current_page">
+			<li class="category">Navigation</li>
+			<li>
+				<a href="{{=URL('search', 'new')}}"><i class="icon-trophy-fill"></i><span>Latest and Greatest</span></a>
+			</li>
+			<li>
+				<a href="{{=URL('profile', 'browse')}}"><i class="icon-earth"></i><span>Browse Users</span></a>
+			</li>
+			<li>
+				<a href="#sidebar-fusion-timelines" class="glyphicons binoculars"><i></i><span>Advanced Search</span></a>
+			</li>
+			<li>
+				<a href="{{=URL('messages', 'index')}}" class="glyphicons message_full"><i></i><span>Messages<span ng-if="unReadMessageCount"> ({!unReadMessageCount!})</span></span></a>
+			</li>
+			<li class="hasSubmenu">
+				<a href="#sidebar-fusion-dashboard" data-toggle="collapse"><i class="fa fa-tachometer"></i><span>My Dashboard</span></a>
+				<ul id="sidebar-fusion-dashboard" class="collapse">
+					<li><a href="{{=URL('dashboard', 'index')}}"><i class="fa fa-group"></i><span>General Info</span></a>
+					</li>
+					<li><a href="{{=URL('dashboard', 'account')}}"><i class="fa fa-group"></i><span>Account Settings</span></a>
+					</li>
+					<li><a href="{{=URL('dashboard', 'media_edit')}}"><i class="icon-upload-photo"></i><span>Create / Edit Album</span></a>
+					</li>
+				</ul>
+			</li>
+			<li ng-hide="!basicData.friends" class="hasSubmenu">
+				<a href="#sidebar-fusion-contacts" data-toggle="collapse" class="glyphicons group"><i></i><span>Friends ({!basicData.friends.length!})</span></a>
+				<ul id="sidebar-fusion-contacts" class="collapse">
+					<li ng-hide="innerCircleList.length == 0"><a href="{{=URL('profile', 'friends', vars=dict(friend_level='innerCircle'))}}"><i class="fa fa-group"></i><span>My Inner Circle ({!innerCircleList.length!})</span></a>
+					</li>
+					<li ng-hide="goodFriendsList.length == 0"><a href="{{=URL('profile', 'friends', vars=dict(friend_level='goodFriends'))}}"><i class="fa fa-group"></i><span>My Good Friends ({!goodFriendsList.length!})</span></a>
+					</li>
+					<li ng-hide="friendList.length == 0"><a href="{{=URL('profile', 'friends', vars=dict(friend_level='friends'))}}"><i class="fa fa-group"></i><span>My Friends ({!friendList.length!})</span></a>
+					</li>
+					<li ng-hide="publicList.length == 0"><a href="{{=URL('profile', 'friends', vars=dict(friend_level='public'))}}"><i class="fa fa-group"></i><span>Public People I follow ({!publicList.length!})</span></a>
+					</li>
+					<li ng-hide="blockedList.length == 0"><a href="{{=URL('profile', 'friends', vars=dict(friend_level='blocked'))}}"><i class="fa fa-group"></i><span>Blocked List ({!blockedList.length!})</span></a>
+					</li>
+				</ul>
+			</li>
+			<li ng-if="!basicData.friends">
+				<a href="#sidebar-fusion-contacts" class="glyphicons group"><i></i><span>No Friends Yet!</span></a>
+			</li>
+
+			<li class="category">News Feeds</li>
+			<li class="reset">
+				<!--<ul>
+					<li class="media news-item">
+						<span class="news-item-success pull-right "><i class="fa fa-circle"></i>
+						</span>
+						<span class="pull-left media-object">
+							<i class="fa fa-fw fa-bell"></i>
+						</span>
+						<div class="media-body">
+							<a href="" class="text-white">Adrian</a> just
+							logged in
+							<span class="time">2 min ago</span>
+						</div>
+					</li>
+					<li class="media news-item">
+						<span class="news-item-success pull-right "><i class="fa fa-circle"></i>
+						</span>
+						<span class="pull-left media-object">
+							<i class="fa fa-fw fa-bell"></i>
+						</span>
+						<div class="media-body">
+							<a href="" class="text-white">Adrian</a> just
+							added <a href="" class="text-white">mosaicpro</a> as
+							their office
+							<span class="time">2 min ago</span>
+						</div>
+					</li>
+					<li class="media news-item">
+						<span class="pull-left media-object">
+							<i class="fa fa-fw fa-bell"></i>
+						</span>
+						<div class="media-body">
+							<a href="" class="text-white">Adrian</a> just
+							logged in
+							<span class="time">2 min ago</span>
+						</div>
+					</li>
+					<li class="media news-item">
+						<span class="pull-left media-object">
+							<i class="fa fa-fw fa-bell"></i>
+						</span>
+						<div class="media-body">
+							<a href="" class="text-white">Adrian</a> just
+							logged in
+							<span class="time">2 min ago</span>
+						</div>
+					</li>
+					<li class="media news-item">
+						<span class="pull-left media-object">
+							<i class="fa fa-fw fa-bell"></i>
+						</span>
+						<div class="media-body">
+							<a href="" class="text-white">Adrian</a> just
+							logged in
+							<span class="time">2 min ago</span>
+						</div>
+					</li>
+				</ul>-->
+			</li>
+		</ul>
+	</div>
+</div>

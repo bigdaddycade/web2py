@@ -1,0 +1,90 @@
+{{extend 'layoutP.html'}}
+<div class="site-wrapper" style="background-image:url('/init/api_shar/image/{!profile.backgroundImg!}');background-size:auto 100%;background-repeat:no-repeat;background-position:center;">
+	<a ng-if="pageView!='home'" class="btn btn-default master-click" ng-click="viewContent('back')" style="margin:25px"><i class="fa fa-times-circle"></i></a>
+
+	<div class="site-wrapper-inner">
+		<h2 ng-if="pageView=='album'">Albums</h2>
+		<h2 ng-if="pageView=='media'">{!activeAlbum.name!}</h2>
+
+		<div ng-if="pageView=='home'" class="cover-container">
+
+			<div ng-if="profile.profileImg" class="profilePic"
+				style="background-image:url('/init/api_shar/image/{!profile.profileImg!}')">
+			</div>
+
+			<div class="inner cover">
+				<h1 class="cover-heading">{!profile.name!}</h1>
+				<p class="text-center">{!profile.tagLine!}</p>
+			</div>
+
+		</div>
+		<div class="scrollingDiv" ng-if="pageView=='album'">
+			<div class="container">
+				<div class="row">
+					<div ng-repeat="album in albums">
+						<div class="pointer" ng-class="{'col-md-6 col-md-offset-3':albums.length == '1', 'col-md-6':albums.length == '2', 'col-lg-4':albums.length == '3', 'col-md-3':albums.length == '4', 'col-md-4':albums.length == '5', 'col-md-4':albums.length == '6', 'col-sm-3 col-md-3':albums.length == '7', 'col-sm-3':albums.length == '8', 'col-sm-4':albums.length == '9', 'col-sm-3':albums.length >= '10', 'col-sm-2':albums.length >= '13'}" ng-click="viewAlbum(album)">
+							<div ng-if="!album.media" class="greyBush">
+								<h4>Blank Album placeholder</h4>
+								<img src="{{=URL('static','images/no-image.jpg')}}" style="width:100px;height:100px">
+							</div>
+							<div ng-if="album.media.length=='1'" class="greyBush">
+								<h4>{!album.name!}</h4>
+								<img src="/init/api_shar/image/{!album.media[0].thumb_data!}" style="width:100px;height:100px">
+							</div>
+							<div ng-if="album.media.length>='4'" class="greyBush">
+								<h4>{!album.name!}</h4>
+								<img src="/init/api_shar/image/{!album.media[0].thumb_data!}" style="width:100px;height:100px">
+							</div>
+							<div ng-if="album.media.length=='2' || album.media.length=='3'" class="greyBush">
+								<strong>two or three</strong>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="scrollingDiv" ng-if="pageView=='media'">
+			<div class="container">
+				<div class="row">
+					<div ng-repeat="media in activeAlbum.media">
+						<div class="pointer" ng-class="{'col-md-6 col-md-offset-3':activeAlbum.media.length == '1', 'col-md-6':albums.length == '2', 'col-lg-4':activeAlbum.media.length == '3', 'col-md-3':activeAlbum.media.length == '4', 'col-md-4':activeAlbum.media.length == '5', 'col-md-4':activeAlbum.media.length == '6', 'col-sm-3  col-md-3':activeAlbum.media.length == '7', 'col-sm-3  col-md-3':activeAlbum.media.length == '8', 'col-sm-4':activeAlbum.media.length == '9', 'col-sm-3':activeAlbum.media.length >= '10', 'col-sm-2':activeAlbum.media.length >= '13'}" ng-click="bigImageToggle('show', $index)">
+							<div class="greyBush">
+								<h4>{!media.name!}</h4>
+								<img src="/init/api_shar/image/{!media.thumb_data!}" style="width:100px;height:100px">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+<div ng-if="!bannerOff" class="bottom-profile-bar">
+	<div class="pointer" ng-click=""><i class="fa fa-book fa-2x"></i><br>About</div>
+	<div class="pointer" ng-click=""><i class="fa fa-pencil-square-o fa-2x"></i><br>Blog</div>
+	<div class="pointer" ng-click="viewContent('album')"><i class="fa fa-picture-o fa-2x"></i><br>Media</div>
+	<div class="pointer" ng-click=""><i class="fa fa-comments-o fa-2x"></i><br>Message</div>
+	{{=editButton}}
+</div>
+
+<div ng-if="showBigImage" class="reg-modul">
+	<div class="big-image-wrapper">
+		<a class="btn btn-default pull-right" ng-click="bigImageToggle()" style="margin:25px"><i class="fa fa-times-circle"></i></a>
+		<div class="img-holder"> 
+			<img src="/init/api_shar/image/{!activeAlbum.media[mediaIndex].media_data!}" class="background_image pull-left" style="max-height:100%">
+			<div class="img-inner-left pointer" ng-click="changeImage('back')">
+				<div class="previous-img">
+					<i class="fa fa-caret-left fa-3x pull-left"></i>
+				</div>
+			</div>
+			<div class="img-inner-right pointer" ng-click="changeImage('next')">
+				<div class="next-img">
+					<i class="fa fa-caret-right fa-3x pull-right"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

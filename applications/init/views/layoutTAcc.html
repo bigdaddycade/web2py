@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie lt-ie9 lt-ie8 lt-ie7 sidebar sidebar-social footer-sticky"> <![endif]-->
+<!--[if IE 7]>    <html class="ie lt-ie9 lt-ie8 sidebar sidebar-social footer-sticky"> <![endif]-->
+<!--[if IE 8]>    <html class="ie lt-ie9 sidebar sidebar-social footer-sticky"> <![endif]-->
+<!--[if gt IE 8]> <html class="ie sidebar sidebar-social footer-sticky"> <![endif]-->
+<!--[if !IE]><!-->
+<html class="sidebar sidebar-social footer-sticky" ng-app="sharoticaApp">
+<!-- <![endif]-->
+<head>
+	<title>All Fun, No Offense</title>
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+
+	<link rel="shortcut icon" href="{{=URL('static','images/favicon.ico')}}" type="image/x-icon">
+	<link rel="apple-touch-icon" href="{{=URL('static','images/favicon.png')}}">
+	<!-- 
+	**********************************************************
+	In development, use the LESS files and the less.js compiler
+	instead of the minified CSS loaded by default.
+	**********************************************************
+	<link rel="stylesheet/less" href="../assets/less/admin/module.admin.stylesheet-complete.less" />
+	-->
+	<!--[if lt IE 9]><link rel="stylesheet" href="../assets/components/library/bootstrap/css/bootstrap.min.css" /><![endif]-->
+	<link rel="stylesheet" href="{{=URL('static','assets/css/admin/module.admin.stylesheet-complete.min.css')}}"
+	/>
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+	<![endif]-->
+	<script src="{{=URL('static','assets/components/library/jquery/jquery.min.js')}}"></script>
+	<script src="{{=URL('static','assets/components/library/jquery/jquery-migrate.min.js')}}"></script>
+	<script src="{{=URL('static','assets/components/library/modernizr/modernizr.js')}}"></script>
+	<script src="{{=URL('static','assets/components/plugins/less-js/less.min.js')}}"></script>
+	<script src="{{=URL('static','assets/components/modules/admin/charts/flot/assets/lib/excanvas.js')}}"></script>
+	<script src="{{=URL('static','assets/components/plugins/browser/ie/ie.prototype.polyfill.js')}}"></script>
+	<script>
+	if ( /*@cc_on!@*/ false && document.documentMode === 10)
+	{
+		document.documentElement.className += ' ie ie10';
+	}
+	</script>
+</head>
+<body class=" menu-right-hidden">
+	<!-- Main Container Fluid -->
+	<div class="container-fluid menu-hidden ">
+		<!-- Main Sidebar Menu -->
+		<div id="menu" class="hidden-print hidden-xs sidebar-default sidebar-brand-primary">
+			<div id="sidebar-social-wrapper">
+				<div id="brandWrapper">
+					<a href="/">
+						{{=response.logo or ''}}
+					</a>
+				</div>
+				<ul class="menu list-unstyled" id="navigation_current_page">
+					<li class="category">Navigation</li>
+					<li class="hasSubmenu">
+						<a href="#sidebar-fusion-dashboard" data-toggle="collapse"><i class="fa fa-tachometer"></i><span>My Dashboard</span></a>
+						<ul id="sidebar-fusion-dashboard" class="collapse">
+							<li><a href="{{=URL('dashboard', 'index')}}"><i class="fa fa-group"></i><span>General Info</span></a>
+							</li>
+							<li><a href="{{=URL('dashboard', 'account')}}"><i class="fa fa-group"></i><span>Account Settings</span></a>
+							</li>
+							<li><a href="{{=URL('dashboard', 'media_edit')}}"><i class="icon-upload-photo"></i><span>Create / Edit Album</span></a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#sidebar-fusion-timelines"><i class="icon-ship-wheel"></i><span>Messages</span></a>
+					</li>
+					<li class="hasSubmenu">
+						<a href="#sidebar-fusion-contacts" data-toggle="collapse" class="glyphicons group"><i></i><span>Friends</span></a>
+						<ul id="sidebar-fusion-contacts" class="collapse">
+							<li><a href="contacts_1.html?lang=en"><i class="fa fa-group"></i><span>My Inner Circle</span></a>
+							</li>
+							<li><a href="contacts_2.html?lang=en"><i class="fa fa-group"></i><span>My Good Friends</span></a>
+							</li>
+							<li><a href="contacts_3.html?lang=en"><i class="fa fa-group"></i><span>My Friends</span></a>
+							</li>
+							<li><a href="contacts_1.html?lang=en"><i class="fa fa-group"></i><span>Public People I follow</span></a>
+							</li>
+							<li><a href="contacts_1.html?lang=en"><i class="fa fa-group"></i><span>Blocked List</span></a>
+							</li>
+						</ul>
+					</li>
+					<li><a href="{{=URL('profile', 'browse')}}"><i class="icon-comment-typing"></i><span>Browse Users</span></a>
+					</li>
+					<li>
+						<a href="#sidebar-fusion-timelines"><i class="icon-ship-wheel"></i><span>Advanced Search</span></a>
+					</li>
+
+					<li class="category">News Feeds</li>
+					<li class="reset">
+						<!--<ul>
+							<li class="media news-item">
+								<span class="news-item-success pull-right "><i class="fa fa-circle"></i>
+								</span>
+								<span class="pull-left media-object">
+									<i class="fa fa-fw fa-bell"></i>
+								</span>
+								<div class="media-body">
+									<a href="" class="text-white">Adrian</a> just
+									logged in
+									<span class="time">2 min ago</span>
+								</div>
+							</li>
+							<li class="media news-item">
+								<span class="news-item-success pull-right "><i class="fa fa-circle"></i>
+								</span>
+								<span class="pull-left media-object">
+									<i class="fa fa-fw fa-bell"></i>
+								</span>
+								<div class="media-body">
+									<a href="" class="text-white">Adrian</a> just
+									added <a href="" class="text-white">mosaicpro</a> as
+									their office
+									<span class="time">2 min ago</span>
+								</div>
+							</li>
+							<li class="media news-item">
+								<span class="pull-left media-object">
+									<i class="fa fa-fw fa-bell"></i>
+								</span>
+								<div class="media-body">
+									<a href="" class="text-white">Adrian</a> just
+									logged in
+									<span class="time">2 min ago</span>
+								</div>
+							</li>
+							<li class="media news-item">
+								<span class="pull-left media-object">
+									<i class="fa fa-fw fa-bell"></i>
+								</span>
+								<div class="media-body">
+									<a href="" class="text-white">Adrian</a> just
+									logged in
+									<span class="time">2 min ago</span>
+								</div>
+							</li>
+							<li class="media news-item">
+								<span class="pull-left media-object">
+									<i class="fa fa-fw fa-bell"></i>
+								</span>
+								<div class="media-body">
+									<a href="" class="text-white">Adrian</a> just
+									logged in
+									<span class="time">2 min ago</span>
+								</div>
+							</li>
+						</ul>-->
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- // Main Sidebar Menu END -->
+		<!-- // Right Sidebar Menu -->
+		<div id="menu-right">
+			<div>
+				<button class="btn btn-inverse btn-xs btn-close" data-toggle="sidr-close" data-menu="menu-right"><i class="fa fa-times"></i>
+				</button>
+				<div class="tab-content">
+					<div class="tab-pane" id="chat-conversation">
+						<ul>
+							<li>
+								<div class="innerAll">
+									<button class="btn btn-primary" data-toggle="tab"
+									data-target="#chat-list"><i class="fa fa-fw fa-user"></i> friends</button>
+								</div>
+							</li>
+							<li class="conversation innerAll">
+								<!-- Media item -->
+								<div class="media">
+									<small class="author"><a href="#" title="" class="strong">Jane Doe</a>
+									</small>
+									<div class="media-object pull-left">
+										<img src="../assets/images/people/50/1.jpg"
+										alt="Image" class="img-circle" />
+									</div>
+									<div class="media-body">
+										<blockquote>
+											<small class="date">
+												<cite>just now</cite>
+											</small>
+											<p>Lorem ipsum dolor sit amet, consectetur
+												adipisicing elit. Necessitatibus,
+												sit?</p>
+										</blockquote>
+									</div>
+								</div>
+								<!-- // Media item END -->
+								<!-- Media item -->
+								<div class="media primary right">
+									<small class="author"><a href="#" title="" class="strong">John Doe</a>
+									</small>
+									<div class="media-object pull-right">
+										<img src="../assets/images/people/50/2.jpg"
+										alt="Image" class="img-circle" />
+									</div>
+									<div class="media-body">
+										<blockquote class="pull-right">
+											<small class="date">
+												<cite>15 seconds ago</cite>
+											</small>
+											<p>Lorem ipsum dolor sit amet, consectetur
+												adipisicing elit. Quo, molestiae!</p>
+										</blockquote>
+									</div>
+								</div>
+								<!-- // Media item END -->
+								<!-- Media item -->
+								<div class="media">
+									<small class="author"><a href="#" title="" class="strong">Ricky</a>
+									</small>
+									<div class="media-object pull-left">
+										<img src="../assets/images/people/50/1.jpg"
+										alt="Image" class="img-circle" />
+									</div>
+									<div class="media-body">
+										<blockquote>
+											<small class="date">
+												<cite>5 minutes ago</cite>
+											</small>
+											<p>Lorem ipsum dolor sit amet, consectetur
+												adipisicing elit. Doloremque, distinctio!</p>
+										</blockquote>
+									</div>
+								</div>
+								<!-- // Media item END -->
+							</li>
+						</ul>
+					</div>
+					<div class="tab-pane active" id="chat-list">
+						<div class="mixitup" id="mixitup-chat" data-show-default="mixit-chat-1" data-layout-mode="list"
+						data-target-selector=".mix" data-filter-selector=".filter-chat">
+							<ul>
+								<li class="category">Groups</li>
+								<li class="reset">
+									<div class="innerLR">
+										<ul>
+											<li class="filter-chat" data-filter="mixit-chat-1">
+												<a href="" class="no-ajaxify">
+													<span class="fa fa-fw fa-circle-o text-success"></span>Work Related</a>
+											</li>
+											<li class="filter-chat" data-filter="mixit-chat-2">
+												<a href="" class="no-ajaxify">
+													<span class="fa fa-fw fa-circle-o text-primary"></span>Very Important</a>
+											</li>
+											<li class="filter-chat" data-filter="mixit-chat-3">
+												<a href="" class="no-ajaxify">
+													<span class="fa fa-fw fa-circle-o text-info"></span>Friends &amp; Family</a>
+											</li>
+										</ul>
+									</div>
+								</li>
+								<li class="category border-bottom">Online</li>
+								<li>
+									<div class="mixit-chat-1 mix media border-bottom innerAll margin-none">
+										<a href="#chat-conversation" data-toggle="tab" class="pull-left media-object">
+											<img src="../assets/images/people/35/1.jpg"
+											class="img-circle" />
+										</a>
+										<div class="media-body">
+											<a href="#chat-conversation" data-toggle="tab" class="pull-right text-muted innerT half">
+												<i class="fa fa-comments"></i> 4
+											</a>
+											<h5 class="margin-none"><a href="#chat-conversation" data-toggle="tab"
+												class="text-white">Perpetua Inger</a>
+											</h5>
+											<small>Hey, the party is on tonight!</small>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Content START -->
+		<!-- TOP Menu -->
+		<div id="content">
+			<div class="navbar hidden-print navbar-default box main" role="navigation">
+				<div class="user-action user-action-btn-navbar pull-right border-left">
+					<a href="#menu-right" class="btn btn-sm btn-navbar btn-open-right"><i class="fa fa-comments fa-2x"></i></a>
+				</div>
+				<div class="user-action user-action-btn-navbar pull-left">
+					<a href="#menu" class="btn btn-sm btn-navbar btn-open-left"><i class="fa fa-bars fa-2x"></i></a>
+				</div>
+				<ul class="notifications pull-left hidden-xs">
+					<li class="dropdown notif">
+						<a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="notif-block icon-envelope-1"></i><span class="fa fa-star"></span></a>
+						<ul class="dropdown-menu chat media-list">
+							<li class="media">
+								<a class="pull-left" href="#">
+									<img class="media-object thumb" src="../assets/images/people/100/15.jpg"
+									alt="50x50" width="50" />
+								</a>
+								<div class="media-body">
+									<span class="label label-default pull-right">5 min</span>
+									<h5 class="media-heading">Adrian D.</h5>
+									<p class="margin-none">Lorem ipsum dolor sit amet, consectetur adipisicing
+										elit.</p>
+								</div>
+							</li>
+							<li class="media">
+								<a class="pull-left" href="#">
+									<img class="media-object thumb" src="../assets/images/people/100/16.jpg"
+									alt="50x50" width="50" />
+								</a>
+								<div class="media-body">
+									<span class="label label-default pull-right">2 days</span>
+									<h5 class="media-heading">Jane B.</h5>
+									<p class="margin-none">Lorem ipsum dolor sit amet, consectetur adipisicing
+										elit.</p>
+								</div>
+							</li>
+							<li class="media">
+								<a class="pull-left" href="#">
+									<img class="media-object thumb" src="../assets/images/people/100/17.jpg"
+									alt="50x50" width="50" />
+								</a>
+								<div class="media-body">
+									<span class="label label-default pull-right">3 days</span>
+									<h5 class="media-heading">Andrew M.</h5>
+									<p class="margin-none">Lorem ipsum dolor sit amet, consectetur adipisicing
+										elit.</p>
+								</div>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<div class="user-action pull-left menu-right-hidden-xs menu-left-hidden-xs border-left">
+					<div class="dropdown username pull-left">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+							<span class="media margin-none">
+								<span class="pull-left">
+									<img src="{{if basicData['profileImg']:}}{{=URL('api_shar','image',args=basicData['profileImg'])}}{{else:}}{{=URL('static','images/no-image.jpg')}}{{pass}}" alt="user"
+									class="img-circle">
+								</span>
+								<span class="media-body">{{=basicData['name']}}
+									<span class="caret"></span>
+								</span>
+							</span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="{{=URL('profile', 'about')}}">Profile</a>
+							</li>
+							<li><a href="messages.html?lang=en">Messages</a>
+							</li>
+							<li><a href="{{=URL('default', 'user', args='logout')}}">Logout</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="input-group hidden-xs pull-left">
+					<span class="input-group-addon"><i class="icon-search"></i>
+					</span>
+					<input type="text" class="form-control" placeholder="Search a friend" />
+				</div>
+			</div>
+
+		{{include}}
+		</div>
+		<!-- // Content END -->
+		<div class="clearfix"></div>
+		<!-- // Sidebar menu & content wrapper END -->
+		<!-- Footer -->
+		<div id="footer" class="hidden-print">
+			<!--  Copyright Line -->
+			<div class="copy">&copy; 2014 - <a href="http://www.sharotica.com">Sharotica</a> -
+				All Rights Reserved. 
+			</div>
+			<!--  End Copyright Line -->
+		</div>
+		<!-- // Footer END -->
+	</div>
+	<!-- // Main Container Fluid END -->
+	<!-- Global -->
+	<script data-id="App.Config">
+	var App = {};
+	var basePath = '',
+		commonPath = "{{=URL('static','assets/')}}",
+		rootPath = '../',
+		DEV = false,
+		componentsPath = "{{=URL('static','assets/components/')}}";
+	var primaryColor = '#f97083',
+		dangerColor = '#b55151',
+		successColor = '#609450',
+		infoColor = '#4a8bc2',
+		warningColor = '#ab7a4b',
+		inverseColor = '#45484d';
+	var themerPrimaryColor = primaryColor;
+	</script>
+	<script src="{{=URL('static','assets/components/library/bootstrap/js/bootstrap.min.js')}}"></script>
+	<script src="{{=URL('static','assets/components/plugins/nicescroll/jquery.nicescroll.min.js')}}"></script>
+	<script src="{{=URL('static','assets/components/plugins/breakpoints/breakpoints.js')}}"></script>
+	<script src="{{=URL('static','assets/components/plugins/preload/pace/pace.min.js')}}"></script>
+	<script src="{{=URL('static','assets/components/plugins/menus/sidr/jquery.sidr.js')}}"></script>
+	<script src="{{=URL('static','assets/components/plugins/holder/holder.js')}}"></script>
+	<script src="{{=URL('static','assets/components/core/js/sidebar.main.init.js')}}"></script>
+	<script src="{{=URL('static','assets/components/core/js/sidebar.collapse.init.js')}}"></script>
+	<script src="{{=URL('static','assets/components/common/forms/elements/bootstrap-select/assets/lib/js/bootstrap-select.js')}}"></script>
+	<script src="{{=URL('static','assets/components/common/forms/elements/bootstrap-select/assets/custom/js/bootstrap-select.init.js')}}"></script>
+	<script src="{{=URL('static','assets/components/modules/admin/menus/menus.sidebar.chat.init.js')}}"></script>
+	<script src="{{=URL('static','assets/components/plugins/mixitup/jquery.mixitup.min.js')}}"></script>
+	<script src="{{=URL('static','assets/components/plugins/mixitup/mixitup.init.js')}}"></script>
+	<script src="{{=URL('static','assets/components/core/js/core.init.js')}}"></script>
+	<script type="text/javascript" src="{{=URL('static','lib/angular/angular.js')}}"></script>
+	<script>
+		var sharoticaApp = angular.module('sharoticaApp', []);
+			sharoticaApp.controller('dashboardaccount', function($scope, $http, $timeout) {
+			/* START CTRL */
+
+				
+				$scope.accountFormData = {};
+				$scope.account = {{=XML(response.json(account))}};
+				$scope.profile = {{=XML(response.json(profile))}};
+				$scope.albums = {{=XML(response.json(albums))}};
+				$scope.accountFormData.friendLevel = $scope.account.friend;
+				$scope.accountFormData.blogLevel = $scope.account.blog;
+				$scope.accountFormData.albumLevel = $scope.account.album;
+				$scope.accountFormData.gender = $scope.account.gender;
+				$scope.updateMessage = '';
+				$scope.currentAlbum = '';
+				$scope.profileImgSelect = false;
+				$scope.backgroundImgSelect = false;
+
+				$scope.upDateAccount = function() {
+					$scope.updateMessage = 'Working...';
+					$http({
+						method: 'POST',
+						url: '/init/api_shar/edit_account_vg.json',
+						data: $scope.accountFormData
+					}).success(function(data) {
+						$scope.updateMessage = 'Updated!';
+						$scope.accountFormData.friendLevel = data.account.friend;
+						$scope.accountFormData.blogLevel = data.account.blog;
+						$scope.accountFormData.albumLevel = data.account.album;
+						$scope.accountFormData.gender = data.account.gender;
+					});
+				};
+				$scope.showAlbum = function (album) {
+					$scope.currentAlbum = album;
+				};
+				$scope.updateProfileImage = function (image) {
+					var dataKey;
+					var dataValue;
+					dataKey = 'newProfileImage';
+					dataValue = image.thumb_data;
+					addDataToProfile(dataKey, dataValue);
+				};
+				$scope.updateBackGroundImage = function (image) {
+					var dataKey;
+					var dataValue;
+					dataKey = 'newBackGroundImage';
+					dataValue = image.banner_data;
+					addDataToProfile(dataKey, dataValue);
+				};
+				$scope.showImageEdit = function (imageType) {
+					$scope.currentAlbum = '';
+					if (imageType == "image") {
+						$scope.profileImgSelect = true;
+						$scope.backgroundImgSelect = false;
+					} else if (imageType == "background") {
+						$scope.profileImgSelect = false;
+						$scope.backgroundImgSelect = true;
+					} else {
+						$scope.profileImgSelect = false;
+						$scope.backgroundImgSelect = false;
+					}
+				};
+				
+				function addDataToProfile(dataKey, dataValue) {
+					$http({
+						method: 'GET',
+						url: '/init/api_shar/update_profile.json?key=' + dataKey + '&value=' + dataValue
+					}).success(function(data) {
+						$scope.account = data.account;
+						$scope.albums = data.albums;
+						$scope.profile = data.profile;
+						$scope.currentAlbum = '';
+						$scope.profileImgSelect = false;
+						$scope.backgroundImgSelect = false;
+					});
+				}
+
+			/* END CTRL */
+			});
+
+	</script>
+</body>
+</html>
