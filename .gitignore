@@ -41,5 +41,5 @@ Icon
 # Directories to ignore
 # =========================
 
-applications\init\uploads
-applications\init\databases
+applications\init\uploads\
+applications\init\databases\
