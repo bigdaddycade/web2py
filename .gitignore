@@ -35,11 +35,9 @@ Icon
 .Trashes
 
 
-
-
 # =========================
-# Directories to ignore
+# Operating System Files
 # =========================
 
-applications\init\uploads\
-applications\init\databases\
+databases/
+uploads/
